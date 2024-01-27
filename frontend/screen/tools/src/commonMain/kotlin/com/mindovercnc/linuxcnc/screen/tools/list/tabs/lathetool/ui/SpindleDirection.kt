@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.widgets.cards.CardWithTitle
 import com.mindovercnc.model.SpindleDirection
@@ -74,8 +75,9 @@ fun DirectionItem(
             )
         }
         Text(
-            text = spindleDirection.name.uppercase(),
+            text = spindleDirection.shortName.uppercase(),
             style = MaterialTheme.typography.labelSmall,
+            textAlign = TextAlign.Center,
             color = selectedTint
         )
     }

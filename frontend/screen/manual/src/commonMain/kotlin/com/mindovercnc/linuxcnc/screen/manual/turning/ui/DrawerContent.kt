@@ -1,7 +1,6 @@
 package com.mindovercnc.linuxcnc.screen.manual.turning.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -15,8 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.model.SimpleCycle
@@ -61,15 +58,16 @@ private fun Cycle(op: SimpleCycle, modifier: Modifier = Modifier, onClick: () ->
         shadowElevation = 8.dp,
         color = MaterialTheme.colorScheme.surfaceVariant
     ) {
-        Box {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier.padding(8.dp)
+        ) {
             val imageSize = 100.dp
             val image = remember(op) {
                 SimpleCyclePainter.from(op)
             }
-            val imageModifier =
-                Modifier.size(imageSize).align(Alignment.TopCenter)
-                    .padding(horizontal = 8.dp)
-                    .padding(top = 8.dp, bottom = 16.dp)
+            val imageModifier = Modifier.size(imageSize)
             if (image == null) {
                 Box(modifier = imageModifier)
             } else {
@@ -83,18 +81,7 @@ private fun Cycle(op: SimpleCycle, modifier: Modifier = Modifier, onClick: () ->
                 text = op.displayableString,
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f)
-                            ),
-                        )
-                    )
-                    .padding(horizontal = 4.dp)
-                    .padding(top = 8.dp)
+                modifier = Modifier.fillMaxWidth()
             )
         }
     }

@@ -8,6 +8,8 @@ import androidx.compose.ui.window.ApplicationScope
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.rememberWindowState
 import com.arkivanov.decompose.ComponentContext
+import com.mindovercnc.linuxcnc.screen.root.createRootComponent
+import com.mindovercnc.linuxcnc.screen.root.ui.RootUi
 import themes.AppTheme
 
 @Composable
@@ -32,7 +34,7 @@ fun ApplicationScope.AppWindow(
         CompositionLocalProvider(LocalDensity provides newDensity) {
             AppTheme(appConfig.darkMode) {
                 val root = createRootComponent(componentContext)
-                MindOverCNCLathe(root = root, modifier = Modifier.fillMaxSize())
+                RootUi(root = root, modifier = Modifier.fillMaxSize())
             }
         }
     }

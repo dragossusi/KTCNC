@@ -10,6 +10,8 @@ val LinuxcncRemoteDataModule = DI.Module("linuxcnc_remote_data") {
     bindSingleton<SystemMessageRepository> {
         SystemMessageRepositoryRemote(instance(), instance())
     }
+    bindSingleton<IniFileRepository> { IniFileRepositoryRemote() }
+
     bindSingleton<CncCommandRepository> {
         CncCommandRepositoryRemote(instance())
     }

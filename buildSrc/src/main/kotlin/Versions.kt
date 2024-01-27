@@ -6,7 +6,7 @@ object Versions {
     const val sqliteJdbc = "3.41.2.1"
     const val okio = "3.7.0"
     const val wire = "4.9.5"
-    const val roborazzi = "1.9.0-alpha-4"
+    const val roborazzi = "1.9.0"
 
     const val sqldelight = "2.0.1"
 

@@ -1,4 +1,4 @@
-package app
+package com.mindovercnc.linuxcnc.screen.root.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -19,13 +19,13 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.mindovercnc.linuxcnc.screen.root.RootComponent
 import com.mindovercnc.linuxcnc.screen.root.child.RootChild
-import ktcnc.frontend.compose.generated.resources.Res
+import ktcnc.frontend.screen.root.generated.resources.Res
 import org.jetbrains.compose.resources.*
 
 private val iconButtonModifier = Modifier.size(48.dp)
 
 @Composable
-fun NewNavigation(root: RootComponent, modifier: Modifier = Modifier) {
+fun RootUi(root: RootComponent, modifier: Modifier = Modifier) {
     val childStack by root.childStack.subscribeAsState()
     val state by root.state.collectAsState()
     val active = childStack.active.instance

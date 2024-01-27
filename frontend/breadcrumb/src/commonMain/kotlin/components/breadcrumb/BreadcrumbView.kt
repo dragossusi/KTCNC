@@ -1,7 +1,6 @@
 package components.breadcrumb
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -69,9 +68,7 @@ internal fun BreadcrumbItem(
     ) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = Modifier
-                .background(Color.Green)
-                .padding(horizontal = 64.dp)
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
         ) {
             Text(text = item.title.ifEmpty { "root" })
         }

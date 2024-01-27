@@ -116,6 +116,8 @@ run {
         include("frontend:screen:conversational")
 
         include("frontend:screen:root")
+
+        include("frontend:screen:notifications")
     }
 
     include("frontend:statemachine")

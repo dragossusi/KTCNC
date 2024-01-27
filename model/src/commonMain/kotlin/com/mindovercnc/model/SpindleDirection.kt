@@ -1,9 +1,10 @@
 package com.mindovercnc.model
 
-enum class SpindleDirection {
-  Forward,
-  Reverse,
-  Both,
-  /** Used for slotting tools. */
-  None
+enum class SpindleDirection(val shortName: String) {
+    Forward("fwd"),
+    Reverse("rev"),
+    Both("both"),
+
+    /** Used for slotting tools. */
+    None("none")
 }

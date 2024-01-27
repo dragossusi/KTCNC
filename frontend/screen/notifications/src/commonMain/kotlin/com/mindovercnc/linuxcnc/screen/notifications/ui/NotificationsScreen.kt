@@ -1,4 +1,4 @@
-package notifications.ui
+package com.mindovercnc.linuxcnc.screen.notifications.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.AlertDialog
@@ -11,17 +11,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.domain.model.Message
-import notifications.NotificationsComponent
+import com.mindovercnc.linuxcnc.screen.notifications.NotificationsComponent
 
+// TODO
 @Composable
-fun NotificationsView(
+fun NotificationsScreen(
     component: NotificationsComponent,
+    modifier: Modifier = Modifier
 ) {
     val state by component.state.collectAsState()
 
     val lastMessage = state.messageList.lastOrNull() ?: return
 
-    Box(modifier = Modifier) {
+    Box(modifier = modifier) {
         when (lastMessage.level) {
             Message.Level.WARNING -> {
                 Snackbar(
@@ -32,7 +34,6 @@ fun NotificationsView(
             }
 
             Message.Level.ERROR -> {
-//                    TODO
                 AlertDialog(
                     onDismissRequest = { },
                     text = {
