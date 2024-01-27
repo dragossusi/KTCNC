@@ -1,6 +1,6 @@
 object Versions {
     const val kotlin = "1.9.20"
-    const val compose = "1.6.0-alpha01"
+    const val compose = "1.6.0-beta01"
     const val kodein = "7.21.1"
     const val exposed = "0.46.0"
     const val sqliteJdbc = "3.41.2.1"
