@@ -15,10 +15,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.tools.model.ToolHolderType
+import ktcnc.frontend.screen.tools.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageBitmap
-import org.jetbrains.compose.resources.resource
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
@@ -30,10 +29,10 @@ fun ToolHolderView(
 ) {
     val imageResource =
         when (type) {
-            ToolHolderType.Generic -> "multifix_generic"
-            ToolHolderType.Boring -> "multifix_boring"
-            ToolHolderType.Centered -> "multifix_centered"
-            ToolHolderType.Parting -> "multifix_parting"
+            ToolHolderType.Generic -> Res.drawable.multifix_generic
+            ToolHolderType.Boring -> Res.drawable.multifix_boring
+            ToolHolderType.Centered -> Res.drawable.multifix_centered
+            ToolHolderType.Parting -> Res.drawable.multifix_parting
         }
 
     val color =
@@ -49,7 +48,7 @@ fun ToolHolderView(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
                 modifier = Modifier.fillMaxWidth().aspectRatio(1f),
-                bitmap = resource(imageResource).rememberImageBitmap().orEmpty(),
+                painter = painterResource(imageResource),
                 contentScale = ContentScale.FillBounds,
                 contentDescription = null
             )

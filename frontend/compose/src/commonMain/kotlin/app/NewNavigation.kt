@@ -2,9 +2,9 @@ package app
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -13,16 +13,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.mindovercnc.linuxcnc.screen.root.RootComponent
 import com.mindovercnc.linuxcnc.screen.root.child.RootChild
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageVector
-import org.jetbrains.compose.resources.resource
+import ktcnc.frontend.compose.generated.resources.Res
+import org.jetbrains.compose.resources.*
 
 private val iconButtonModifier = Modifier.size(48.dp)
 
@@ -46,6 +44,7 @@ fun NewNavigation(root: RootComponent, modifier: Modifier = Modifier) {
                         RootComponent.Config.Tools -> {
                             "T${state.currentTool}"
                         }
+
                         else -> null
                     }
                 }
@@ -73,7 +72,7 @@ private fun NewTopAppBar(active: RootChild) {
     )
 }
 
-private val tabs =
+private val tabs: List<RootComponent.Config> =
     listOf(
         RootComponent.Config.Manual,
         RootComponent.Config.Conversational,
@@ -148,17 +147,18 @@ private fun RowScope.TabNavigationItem(
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun BottomIcon(tab: RootComponent.Config, tint: Color, modifier: Modifier = Modifier) {
-    val imageVector =
+    val painter =
         when (tab) {
-            RootComponent.Config.Conversational -> Icons.Default.Star
+            RootComponent.Config.Conversational -> rememberVectorPainter(Icons.Default.Star)
             RootComponent.Config.Manual -> {
-                resource("manual_tab.xml").rememberImageVector(LocalDensity.current).orEmpty()
+                painterResource(Res.drawable.manual_tab)
             }
-            RootComponent.Config.Programs -> Icons.Default.List
-            RootComponent.Config.Status -> Icons.Default.Info
-            RootComponent.Config.Tools -> Icons.Default.Build
+
+            RootComponent.Config.Programs -> rememberVectorPainter(Icons.AutoMirrored.Default.List)
+            RootComponent.Config.Status -> rememberVectorPainter(Icons.Default.Info)
+            RootComponent.Config.Tools -> rememberVectorPainter(Icons.Default.Build)
         }
-    Icon(imageVector = imageVector, contentDescription = null, modifier = modifier, tint = tint)
+    Icon(painter = painter, contentDescription = null, modifier = modifier, tint = tint)
 }
 
 @Composable

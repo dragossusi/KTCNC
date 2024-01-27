@@ -11,14 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
-import com.mindovercnc.model.SpindleDirection
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageVector
-import org.jetbrains.compose.resources.resource
 import com.mindovercnc.linuxcnc.widgets.cards.CardWithTitle
+import com.mindovercnc.model.SpindleDirection
+import ktcnc.frontend.screen.tools.generated.resources.Res
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -51,14 +49,13 @@ fun DirectionItem(
     active: Boolean? = null,
     modifier: Modifier = Modifier
 ) {
-    val direction =
+    val resource =
         when (spindleDirection) {
-            SpindleDirection.Reverse -> "rev"
-            SpindleDirection.Forward -> "fwd"
-            SpindleDirection.Both -> "both"
-            SpindleDirection.None -> "none"
+            SpindleDirection.Reverse -> Res.drawable.spindle_rev
+            SpindleDirection.Forward -> Res.drawable.spindle_fwd
+            SpindleDirection.Both -> Res.drawable.spindle_both
+            SpindleDirection.None -> null
         }
-    val fileName = "spindle_${direction}.xml"
 
     val selectedTint =
         when (active) {
@@ -68,14 +65,16 @@ fun DirectionItem(
         }
 
     Box(contentAlignment = Alignment.Center, modifier = modifier) {
-        Icon(
-            modifier = Modifier.size(50.dp),
-            imageVector = resource(fileName).rememberImageVector(LocalDensity.current).orEmpty(),
-            tint = selectedTint,
-            contentDescription = null,
-        )
+        if (resource != null) {
+            Icon(
+                modifier = Modifier.size(50.dp),
+                painter = painterResource(resource),
+                tint = selectedTint,
+                contentDescription = null,
+            )
+        }
         Text(
-            text = direction.uppercase(),
+            text = spindleDirection.name.uppercase(),
             style = MaterialTheme.typography.labelSmall,
             color = selectedTint
         )

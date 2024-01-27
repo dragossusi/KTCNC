@@ -31,7 +31,6 @@ kotlin {
                 //                implementation(compose.uiTooling)
                 implementation(compose.material3)
                 implementation(compose.materialIconsExtended)
-                @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 
                 // internal modules

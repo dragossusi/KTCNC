@@ -18,9 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.domain.ConversationalUseCase
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageBitmap
-import org.jetbrains.compose.resources.resource
+import org.jetbrains.compose.resources.painterResource
 import org.kodein.di.compose.rememberInstance
 
 @Composable
@@ -37,31 +35,21 @@ fun ConversationalView(modifier: Modifier, onNewOpClicked: (ConversationalOperat
     }
 }
 
-enum class ConversationalOperation(val displayableString: String, val imgName: String? = null) {
-    OdTurning("OD Turning", "od.png"),
-    IdTurning("ID Turning", "id.png"),
-    Profiling("Profiling", "lathe-depth-step.png"),
-    Facing("Facing", "facing.png"),
-    Grooving("Grooving\nParting", "parting.png"),
-    Threading("Threading", "threading.png"),
-    Drilling("Drilling\nReaming"),
-    KeySlot("Slotting", "slotting.png"),
-}
-
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun Operation(op: ConversationalOperation, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val interactionSource = remember { MutableInteractionSource() }
     val shape = RoundedCornerShape(8.dp)
+    val resource = remember(op) { ConversationalOperationPainter.from(op) }
     Surface(
         modifier =
-            modifier
-                .clip(shape)
-                .clickable(
-                    interactionSource,
-                    indication = LocalIndication.current,
-                    onClick = onClick
-                ),
+        modifier
+            .clip(shape)
+            .clickable(
+                interactionSource,
+                indication = LocalIndication.current,
+                onClick = onClick
+            ),
         border = BorderStroke(1.dp, SolidColor(Color.DarkGray)),
         shape = shape,
         shadowElevation = 8.dp,
@@ -71,27 +59,27 @@ fun Operation(op: ConversationalOperation, modifier: Modifier = Modifier, onClic
             modifier = Modifier.padding(4.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            if (op.imgName != null) {
-                Image(
-                    modifier =
-                        Modifier.width(100.dp)
-                            .height(100.dp)
-                            .background(
-                                color = MaterialTheme.colorScheme.background,
-                                shape = RoundedCornerShape(6.dp),
-                            ),
-                    contentDescription = null,
-                    bitmap = resource(op.imgName).rememberImageBitmap().orEmpty()
-                )
-            } else {
+            if (resource == null) {
                 Box(
                     modifier =
-                        Modifier.width(100.dp)
-                            .height(100.dp)
-                            .background(
-                                color = MaterialTheme.colorScheme.background,
-                                shape = RoundedCornerShape(6.dp),
-                            )
+                    Modifier.width(100.dp)
+                        .height(100.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.background,
+                            shape = RoundedCornerShape(6.dp),
+                        )
+                )
+            } else {
+                Image(
+                    modifier =
+                    Modifier.width(100.dp)
+                        .height(100.dp)
+                        .background(
+                            color = MaterialTheme.colorScheme.background,
+                            shape = RoundedCornerShape(6.dp),
+                        ),
+                    contentDescription = null,
+                    painter = painterResource(resource)
                 )
             }
             Text(

@@ -18,7 +18,6 @@ val BaseAppModule =
         importAll(
             DispatchersModule,
             EditorModule,
-            ScreenModelModule,
             DomainModule,
         )
         bindSingleton { StatusWatcher(instance(), instance(), instance()) }

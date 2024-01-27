@@ -12,10 +12,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.tools.model.ToolType
+import ktcnc.frontend.screen.tools.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageBitmap
-import org.jetbrains.compose.resources.resource
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
@@ -27,15 +26,15 @@ fun ToolTypeView(
 ) {
     val imageResource =
         when (type) {
-            ToolType.Turning -> "lathe-tool.png"
-            ToolType.Boring -> "lathe-tool.png"
-            ToolType.Drilling -> "lathe-tool.png"
-            ToolType.Reaming -> "lathe-tool.png"
-            ToolType.Grooving -> "lathe-tool.png"
-            ToolType.Parting -> "lathe-tool.png"
-            ToolType.OdThreading -> "lathe-tool.png"
-            ToolType.IdThreading -> "lathe-tool.png"
-            ToolType.Slotting -> "lathe-tool.png"
+            ToolType.Turning -> Res.drawable.lathe_tool
+            ToolType.Boring -> Res.drawable.lathe_tool
+            ToolType.Drilling -> Res.drawable.lathe_tool
+            ToolType.Reaming -> Res.drawable.lathe_tool
+            ToolType.Grooving -> Res.drawable.lathe_tool
+            ToolType.Parting -> Res.drawable.lathe_tool
+            ToolType.OdThreading -> Res.drawable.lathe_tool
+            ToolType.IdThreading -> Res.drawable.lathe_tool
+            ToolType.Slotting -> Res.drawable.lathe_tool
         }
 
     val color =
@@ -50,7 +49,7 @@ fun ToolTypeView(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
                 modifier = Modifier.fillMaxWidth().aspectRatio(1f),
-                bitmap = resource(imageResource).rememberImageBitmap().orEmpty(),
+                painter = painterResource(imageResource),
                 contentScale = ContentScale.FillBounds,
                 contentDescription = null
             )

@@ -8,10 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ktcnc.frontend.filesystem.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageBitmap
-import org.jetbrains.compose.resources.resource
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 expect fun FileSystemItemView(item: FileSystemItemData, modifier: Modifier = Modifier)
@@ -22,15 +21,15 @@ expect fun FileSystemItemView(item: FileSystemItemData, modifier: Modifier = Mod
 internal fun FileImage(item: FileSystemItemData) {
     val resourcePath = remember(item.isDirectory) {
         when {
-            item.isDirectory -> "folder-icon.png"
-            else -> "gcode.png"
+            item.isDirectory -> Res.drawable.folder_icon
+            else -> Res.drawable.gcode
         }
     }
 
     Image(
         modifier = Modifier.width(40.dp).height(40.dp),
         contentDescription = null,
-        bitmap = resource(resourcePath).rememberImageBitmap().orEmpty()
+        painter = painterResource(resourcePath)
     )
 }
 

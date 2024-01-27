@@ -15,16 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.format.toFixedDigitsString
 import com.mindovercnc.model.HandWheelsUiModel
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageVector
-import org.jetbrains.compose.resources.resource
+import ktcnc.frontend.screen.manual.generated.resources.Res
+import org.jetbrains.compose.resources.*
 
 @Composable
 fun HandWheelStatus(uiModel: HandWheelsUiModel?, modifier: Modifier = Modifier) {
@@ -66,7 +63,7 @@ private fun JogWheel(axisLetter: Char, activeColor: Color, modifier: Modifier = 
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            imageVector = resource("hwheel.xml").rememberImageVector(LocalDensity.current).orEmpty(),
+            painter = painterResource(Res.drawable.hwheel),
             contentDescription = null
         )
         Text(

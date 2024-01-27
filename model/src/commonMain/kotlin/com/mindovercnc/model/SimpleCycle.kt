@@ -1,17 +1,14 @@
 package com.mindovercnc.model
 
-enum class SimpleCycle(
-    val displayableString: String,
-    val imgName: String? = null,
-) {
-    Turning("OD Turning", "od_turn.xml"),
-    Boring("ID Turning", "id_turn.xml"),
-    OdChamfer("OD Chamfer", "od_chamfer.xml"),
-    IdChamfer("ID Chamfer", "id_chamfer.xml"),
-    OdRadius("OD Radius", "od_radius.xml"),
-    IdRadius("ID Radius", "id_radius.xml"),
-    Facing("Facing", "facing.xml"),
-    Threading("Threading", "threading.png"),
+enum class SimpleCycle(val displayableString: String) {
+    Turning("OD Turning"),
+    Boring("ID Turning"),
+    OdChamfer("OD Chamfer"),
+    IdChamfer("ID Chamfer"),
+    OdRadius("OD Radius"),
+    IdRadius("ID Radius"),
+    Facing("Facing"),
+    Threading("Threading"),
     Drilling("Drilling/Reaming"),
-    KeySlot("Slotting", "slotting.png"),
+    KeySlot("Slotting"),
 }

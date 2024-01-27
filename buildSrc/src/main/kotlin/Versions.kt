@@ -5,14 +5,14 @@ object Versions {
     const val exposed = "0.46.0"
     const val sqliteJdbc = "3.41.2.1"
     const val okio = "3.7.0"
-    const val wire = "4.9.3"
+    const val wire = "4.9.5"
     const val roborazzi = "1.9.0-alpha-4"
 
     const val sqldelight = "2.0.1"
 
     const val bignum = "0.3.8"
     const val mockk = "1.13.7"
-    const val decompose = "3.0.0-alpha04"
+    const val decompose = "3.0.0-alpha05"
 
     object Kotlinx {
         const val datetime = "0.5.0"

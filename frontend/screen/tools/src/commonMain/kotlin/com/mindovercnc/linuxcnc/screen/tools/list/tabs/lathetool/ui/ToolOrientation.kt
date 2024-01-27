@@ -6,24 +6,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.model.TipOrientation
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageVector
-import org.jetbrains.compose.resources.resource
+import org.jetbrains.compose.resources.painterResource
 
-val pickerModifier = Modifier.size(50.dp)
+private val pickerModifier = Modifier.size(50.dp)
 
-val viewModifier = Modifier.size(20.dp)
-
-val arrangement = Arrangement.spacedBy(4.dp)
+private val arrangement = Arrangement.spacedBy(4.dp)
 
 @Composable
 fun ToolOrientationPicker(
@@ -81,7 +79,9 @@ fun TipOrientationUi(
     enabled: Boolean = true,
     modifier: Modifier = Modifier
 ) {
-    val fileName = "position${orientation.orient}.xml"
+    val fileName = remember(orientation) {
+        TipOrientationPainter.from(orientation)
+    }
 
     Surface(
         modifier = modifier,
@@ -98,7 +98,7 @@ fun TipOrientationUi(
                 else -> LocalContentColor.current
             }
         Icon(
-            imageVector = resource(fileName).rememberImageVector(LocalDensity.current).orEmpty(),
+            painter = painterResource(fileName),
             tint = selectedTint,
             contentDescription = null,
         )

@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.BaselineShift
@@ -17,10 +16,9 @@ import androidx.compose.ui.unit.sp
 import com.mindovercnc.linuxcnc.numpad.data.InputType
 import com.mindovercnc.linuxcnc.screen.manual.simplecycles.SimpleCyclesComponent
 import com.mindovercnc.model.SimpleCycleParameters
+import ktcnc.frontend.screen.manual.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.orEmpty
-import org.jetbrains.compose.resources.rememberImageVector
-import org.jetbrains.compose.resources.resource
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -41,16 +39,13 @@ fun TurningParametersView(
         Column(modifier = Modifier.weight(1f)) {
             Image(
                 modifier =
-                    Modifier.height(300.dp)
-                        .background(
-                            color = Color.Transparent,
-                            shape = RoundedCornerShape(6.dp),
-                        ),
+                Modifier.height(300.dp)
+                    .background(
+                        color = Color.Transparent,
+                        shape = RoundedCornerShape(6.dp),
+                    ),
                 contentDescription = null,
-                imageVector =
-                    resource("od_turn_details.xml")
-                        .rememberImageVector(LocalDensity.current)
-                        .orEmpty()
+                painter = painterResource(Res.drawable.od_turn_details)
             )
         }
         Spacer(modifier = Modifier.width(1.dp).fillMaxHeight().background(Color.LightGray))
@@ -60,30 +55,30 @@ fun TurningParametersView(
         ) {
             CycleParameter(
                 parameterAnnotatedLabel =
-                    buildAnnotatedString {
-                        append("X")
-                        withStyle(subscript) { append("1") }
-                    },
+                buildAnnotatedString {
+                    append("X")
+                    withStyle(subscript) { append("1") }
+                },
                 inputType = InputType.X_END,
                 value = parametersState.xEnd,
                 onValueChange = viewModel::setXEnd,
             )
             CycleParameter(
                 parameterAnnotatedLabel =
-                    buildAnnotatedString {
-                        append("Z")
-                        withStyle(subscript) { append("1") }
-                    },
+                buildAnnotatedString {
+                    append("Z")
+                    withStyle(subscript) { append("1") }
+                },
                 inputType = InputType.Z_END,
                 value = parametersState.zEnd,
                 onValueChange = viewModel::setZEnd,
             )
             CycleParameter(
                 parameterAnnotatedLabel =
-                    buildAnnotatedString {
-                        append("X")
-                        withStyle(subscript) { append("2") }
-                    },
+                buildAnnotatedString {
+                    append("X")
+                    withStyle(subscript) { append("2") }
+                },
                 inputType = InputType.X_END,
                 value = parametersState.xEnd,
                 teachInLabel = "TeachIn X",
@@ -92,10 +87,10 @@ fun TurningParametersView(
             )
             CycleParameter(
                 parameterAnnotatedLabel =
-                    buildAnnotatedString {
-                        append("Z")
-                        withStyle(subscript) { append("2") }
-                    },
+                buildAnnotatedString {
+                    append("Z")
+                    withStyle(subscript) { append("2") }
+                },
                 inputType = InputType.Z_END,
                 value = parametersState.zEnd,
                 teachInLabel = "TeachIn Z",

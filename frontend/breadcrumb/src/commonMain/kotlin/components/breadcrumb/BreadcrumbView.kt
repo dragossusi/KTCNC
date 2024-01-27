@@ -1,6 +1,7 @@
 package components.breadcrumb
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,14 +21,15 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import scroll.draggableScroll
 
+private val trapezeShape = TrapezeShape()
+private val parallelogramShape = ParallelogramShape()
+
 @Composable
 fun BreadcrumbView(
     data: BreadCrumbData,
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
-    val trapezeShape = TrapezeShape()
-    val parallelogramShape = ParallelogramShape()
 
     val scrollState = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -54,17 +56,24 @@ internal fun BreadcrumbItem(
     selected: Boolean,
     modifier: Modifier = Modifier
 ) {
+    val color =
+        if (selected) MaterialTheme.colorScheme.secondaryContainer
+        else MaterialTheme.colorScheme.surface
+
     Surface(
         modifier = modifier,
         border = BorderStroke(width = 1.dp, color = Color.LightGray),
         shape = shape,
         onClick = item.onClick,
-        color =
-        if (selected) MaterialTheme.colorScheme.secondaryContainer
-        else MaterialTheme.colorScheme.surface
+        color = color
     ) {
-        Box(contentAlignment = Alignment.Center) {
-            Text(text = item.title.ifEmpty { "root" }, modifier = Modifier.padding(horizontal = 16.dp))
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .background(Color.Green)
+                .padding(horizontal = 64.dp)
+        ) {
+            Text(text = item.title.ifEmpty { "root" })
         }
     }
 }
