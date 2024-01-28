@@ -1,6 +1,6 @@
 package com.mindovercnc.linuxcnc.gcode
 
-import com.mindovercnc.linuxcnc.gcode.model.GCodeCommand
+import com.mindovercnc.linuxcnc.reader.gcode.GCodeCommand
 import okio.Path
 
 interface GCodeInterpreterRepository {

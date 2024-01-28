@@ -14,6 +14,7 @@ kotlin {
             dependencies {
                 implementation(compose.ui)
                 implementation(project(":model"))
+                api(project(":frontend:canvas"))
             }
         }
     }

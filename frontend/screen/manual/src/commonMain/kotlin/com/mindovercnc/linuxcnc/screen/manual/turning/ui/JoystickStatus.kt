@@ -1,10 +1,8 @@
 package com.mindovercnc.linuxcnc.screen.manual.turning.ui
 
-import actor.*
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,6 +17,14 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import com.mindovercnc.linuxcnc.actor.ArrowTipActor
+import com.mindovercnc.linuxcnc.actor.LineActor
+import com.mindovercnc.linuxcnc.actor.OffsetPlacement
+import com.mindovercnc.linuxcnc.actor.TextActor
+import com.mindovercnc.linuxcnc.canvas.Canvas2D
+import com.mindovercnc.linuxcnc.canvas.Canvas2DScope
+import com.mindovercnc.linuxcnc.canvas.CanvasActor
+import com.mindovercnc.linuxcnc.canvas.rotateBy
 import org.jetbrains.skia.Paint
 
 private data class JoystickStatusSizes(
@@ -28,6 +34,7 @@ private data class JoystickStatusSizes(
 )
 
 private val defaultColor = Color.DarkGray
+
 @Composable
 fun JoystickStatus(
     modifier: Modifier = Modifier.size(80.dp),
@@ -36,7 +43,7 @@ fun JoystickStatus(
     val density = LocalDensity.current
 
     val sizes = remember(density) {
-        with(density){
+        with(density) {
             JoystickStatusSizes(
                 centerRadius = 10.dp.toPx(),
                 outerRadius = 40.dp.toPx(),
@@ -53,37 +60,40 @@ fun JoystickStatus(
         )
     )
 
-    Canvas(modifier = modifier) {
-        drawCircle(
+    Canvas2D(modifier = modifier) { drawScope ->
+        val center = drawScope.center
+        drawScope.drawCircle(
             center = center,
             radius = sizes.centerRadius,
             color = defaultColor
         )
 
-        drawCircle(
+        drawScope.drawCircle(
             center = center,
             radius = sizes.outerRadius,
             color = defaultColor.copy(alpha = 0.2f),
             style = Stroke(width = 1f)
         )
 
-        Direction.entries.forEach {
-            AxisDirectionActor(
-                direction = it,
+        for (direction in Direction.entries) {
+            val actor = AxisDirectionActor(
+                direction = direction,
                 centerPoint = center,
                 length = sizes.outerRadius,
                 axisColor = defaultColor
             )
                 .rotateBy(angle = axisAngle, pivot = center)
-                .drawInto(this)
+
+            with(actor) { drawInto(drawScope) }
         }
 
-        AxisTextActor(
+        val axisTextActor = AxisTextActor(
             centerPoint = center,
             axisColor = defaultColor,
             lineDrawRadius = sizes.outerRadius,
             textDrawRadius = sizes.textRadius
-        ).drawInto(this)
+        )
+        with(axisTextActor) { drawInto(drawScope) }
     }
 }
 
@@ -149,8 +159,10 @@ private class AxisTextActor(
         }
     }
 
-    override fun drawInto(drawScope: DrawScope) {
-        actors.forEach { it.drawInto(drawScope) }
+    override fun Canvas2DScope.drawInto(drawScope: DrawScope) {
+        for (actor in actors) {
+            with(actor) { drawInto(drawScope) }
+        }
     }
 }
 
@@ -198,7 +210,9 @@ private class AxisDirectionActor(
         )
     }
 
-    override fun drawInto(drawScope: DrawScope) {
-        actors.forEach { it.drawInto(drawScope) }
+    override fun Canvas2DScope.drawInto(drawScope: DrawScope) {
+        for (actor in actors) {
+            with(actor) { drawInto(drawScope) }
+        }
     }
 }

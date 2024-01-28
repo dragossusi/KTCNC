@@ -13,6 +13,7 @@ dependencies {
     implementation(project(":logger"))
     implementation(project(":dispatcher"))
     implementation(project(":logger"))
+    implementation(project(":reader:gcode"))
 //                implementation(project(":database"))
     implementation(project(":model"))
     implementation(project(":protos"))

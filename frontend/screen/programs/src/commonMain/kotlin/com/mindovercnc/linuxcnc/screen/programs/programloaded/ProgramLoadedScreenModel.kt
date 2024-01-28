@@ -1,13 +1,13 @@
 package com.mindovercnc.linuxcnc.screen.programs.programloaded
 
-import actor.PathActor
-import actor.ProgramData
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.ComponentContext
 import com.mindovercnc.data.linuxcnc.IniFileRepository
 import com.mindovercnc.dispatchers.IoDispatcher
 import com.mindovercnc.editor.EditorLoader
+import com.mindovercnc.linuxcnc.actor.PathActor
+import com.mindovercnc.linuxcnc.actor.ProgramData
 import com.mindovercnc.linuxcnc.domain.*
 import com.mindovercnc.linuxcnc.domain.model.ActiveCode
 import com.mindovercnc.linuxcnc.domain.model.PathUiState
@@ -15,7 +15,6 @@ import com.mindovercnc.linuxcnc.domain.model.ZoomRange
 import com.mindovercnc.linuxcnc.screen.BaseScreenModel
 import com.mindovercnc.linuxcnc.screen.programs.programloaded.ui.ToolChangeModel
 import com.mindovercnc.model.MachineLimits
-import kotlin.math.min
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,6 +24,7 @@ import okio.Path
 import org.jetbrains.skia.Point
 import org.kodein.di.DI
 import org.kodein.di.instance
+import kotlin.math.min
 
 class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
     BaseScreenModel<ProgramLoadedState>(ProgramLoadedState(), componentContext),
@@ -93,15 +93,15 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
                 val rulers = it.visualTurningState.programRulers.rescaled(defaultPixelsPerUnit)
                 it.copy(
                     visualTurningState =
-                        it.visualTurningState.copy(
-                            pathUiState = pathUiState,
-                            programRulers = rulers,
-                            defaultPixelsPerUnit = defaultPixelsPerUnit,
-                            translate =
-                                pathUiState.getInitialTranslate(
-                                    viewportSize = it.visualTurningState.viewportSize
-                                )
+                    it.visualTurningState.copy(
+                        pathUiState = pathUiState,
+                        programRulers = rulers,
+                        defaultPixelsPerUnit = defaultPixelsPerUnit,
+                        translate =
+                        pathUiState.getInitialTranslate(
+                            viewportSize = it.visualTurningState.viewportSize
                         )
+                    )
                 )
             }
         }
@@ -113,9 +113,9 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
                 mutableState.update {
                     it.copy(
                         visualTurningState =
-                            it.visualTurningState.copy(
-                                toolPosition = point,
-                            )
+                        it.visualTurningState.copy(
+                            toolPosition = point,
+                        )
                     )
                 }
             }
@@ -136,10 +136,10 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
                 mutableState.update {
                     it.copy(
                         machineStatus =
-                            it.machineStatus.copy(
-                                spindleOverride = model.spindleOverride,
-                                actualSpindleSpeed = model.actualRpm
-                            )
+                        it.machineStatus.copy(
+                            spindleOverride = model.spindleOverride,
+                            actualSpindleSpeed = model.actualRpm
+                        )
                     )
                 }
             }
@@ -151,9 +151,9 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
                 mutableState.update {
                     it.copy(
                         machineStatus =
-                            it.machineStatus.copy(
-                                feedOverride = model.feedOverride,
-                            )
+                        it.machineStatus.copy(
+                            feedOverride = model.feedOverride,
+                        )
                     )
                 }
             }
@@ -165,10 +165,10 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
                 mutableState.update {
                     it.copy(
                         toolChangeModel =
-                            when {
-                                toolNo != null -> ToolChangeModel(toolNo)
-                                else -> null
-                            }
+                        when {
+                            toolNo != null -> ToolChangeModel(toolNo)
+                            else -> null
+                        }
                     )
                 }
             }
@@ -185,9 +185,9 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
         mutableState.update {
             it.copy(
                 visualTurningState =
-                    it.visualTurningState.copy(
-                        translate = it.visualTurningState.translate.plus(offset)
-                    )
+                it.visualTurningState.copy(
+                    translate = it.visualTurningState.translate.plus(offset)
+                )
             )
         }
         // println("Translate: ${mutableState.value.visualTurningState.translate}")
@@ -233,15 +233,15 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
             val rulers = currentState.visualTurningState.programRulers.rescaled(pixelPerUnit)
             currentState.copy(
                 visualTurningState =
-                    currentState.visualTurningState.copy(
-                        scale = newScale,
-                        pathUiState = pathUiState,
-                        programRulers = rulers,
-                        translate =
-                            pathUiState.getInitialTranslate(
-                                viewportSize = currentState.visualTurningState.viewportSize
-                            )
+                currentState.visualTurningState.copy(
+                    scale = newScale,
+                    pathUiState = pathUiState,
+                    programRulers = rulers,
+                    translate =
+                    pathUiState.getInitialTranslate(
+                        viewportSize = currentState.visualTurningState.viewportSize
                     )
+                )
             )
         }
     }

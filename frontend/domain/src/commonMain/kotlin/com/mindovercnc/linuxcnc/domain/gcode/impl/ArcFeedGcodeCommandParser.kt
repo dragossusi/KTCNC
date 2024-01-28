@@ -1,9 +1,9 @@
 package com.mindovercnc.linuxcnc.domain.gcode.impl
 
-import actor.PathElement
+import com.mindovercnc.linuxcnc.actor.PathElement
 import com.mindovercnc.linuxcnc.domain.gcode.GcodeCommandParseScope
 import com.mindovercnc.linuxcnc.domain.gcode.GcodeCommandParser
-import com.mindovercnc.linuxcnc.gcode.model.GCodeCommand
+import com.mindovercnc.linuxcnc.reader.gcode.GCodeCommand
 import com.mindovercnc.model.Point3D
 
 /** [GcodeCommandParser] that handles arc feed commands. */
@@ -29,8 +29,8 @@ object ArcFeedGcodeCommandParser : GcodeCommandParser {
                     endPoint = current,
                     centerPoint = center,
                     direction =
-                        if (args[4].toInt() > 0) PathElement.Arc.Direction.Clockwise
-                        else PathElement.Arc.Direction.CounterClockwise
+                    if (args[4].toInt() > 0) PathElement.Arc.Direction.Clockwise
+                    else PathElement.Arc.Direction.CounterClockwise
                 )
             }
         return element.apply { lastPoint = current }

@@ -79,6 +79,8 @@ run {
 
     include("frontend:app")
 
+    include("frontend:canvas")
+
     include("frontend:breadcrumb")
 
     include("frontend:filesystem")
@@ -121,6 +123,11 @@ run {
     }
 
     include("frontend:statemachine")
+}
+
+run {
+    include("reader:gcode")
+    include("reader:tbl")
 }
 
 include("initializer")

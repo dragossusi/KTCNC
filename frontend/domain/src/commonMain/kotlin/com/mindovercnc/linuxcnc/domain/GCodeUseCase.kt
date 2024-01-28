@@ -1,12 +1,12 @@
 package com.mindovercnc.linuxcnc.domain
 
-import actor.PathElement
 import com.mindovercnc.dispatchers.IoDispatcher
+import com.mindovercnc.linuxcnc.actor.PathElement
 import com.mindovercnc.linuxcnc.domain.gcode.GcodeCommandParseScope
 import com.mindovercnc.linuxcnc.domain.gcode.GcodeCommandParser
 import com.mindovercnc.linuxcnc.domain.gcode.impl.GcodeCommandParseScopeImpl
 import com.mindovercnc.linuxcnc.gcode.GCodeInterpreterRepository
-import com.mindovercnc.linuxcnc.gcode.model.GCodeCommand
+import com.mindovercnc.linuxcnc.reader.gcode.GCodeCommand
 import kotlinx.coroutines.withContext
 import mu.KotlinLogging
 import okio.Path

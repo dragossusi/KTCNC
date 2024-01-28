@@ -1,10 +1,12 @@
 package com.mindovercnc.linuxcnc.domain.model
 
-import actor.*
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.IntSize
+import com.mindovercnc.linuxcnc.actor.*
+import com.mindovercnc.linuxcnc.canvas.Canvas2DScope
+import com.mindovercnc.linuxcnc.canvas.CanvasActor
 import com.mindovercnc.model.MachineLimits
 import com.mindovercnc.model.WcsLimits
 import org.jetbrains.skia.Point
@@ -49,10 +51,10 @@ data class VisualTurningState(
             wcsPosition = position,
             referenceActor = referenceActor.copy(text = wcs.coordinateSystem),
             programRulers =
-                ProgramRulers(
-                    wcsLimits = machineLimits.toWcsLimits(position),
-                    pixelPerUnit = pixelPerUnit
-                )
+            ProgramRulers(
+                wcsLimits = machineLimits.toWcsLimits(position),
+                pixelPerUnit = pixelPerUnit
+            )
         )
     }
 }
@@ -71,9 +73,9 @@ data class PathUiState(
 
     fun rescaled(pixelPerUnit: Float) = copy(pathActor = pathActor.rescaled(pixelPerUnit))
 
-    override fun drawInto(drawScope: DrawScope) {
-        pathActor.drawInto(drawScope)
-        axesActor.drawInto(drawScope)
+    override fun Canvas2DScope.drawInto(drawScope: DrawScope) {
+        with(pathActor) { drawInto(drawScope) }
+        with(axesActor) { drawInto(drawScope) }
     }
 
     fun getInitialTranslate(viewportSize: IntSize) =

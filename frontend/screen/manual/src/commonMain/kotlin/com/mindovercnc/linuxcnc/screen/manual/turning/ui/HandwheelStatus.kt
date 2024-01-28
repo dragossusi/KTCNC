@@ -1,10 +1,5 @@
 package com.mindovercnc.linuxcnc.screen.manual.turning.ui
 
-import actor.ArrowTipActor
-import actor.CanvasActor
-import actor.LineActor
-import actor.rotateBy
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -18,10 +13,17 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.mindovercnc.linuxcnc.actor.ArrowTipActor
+import com.mindovercnc.linuxcnc.actor.LineActor
+import com.mindovercnc.linuxcnc.canvas.Canvas2D
+import com.mindovercnc.linuxcnc.canvas.Canvas2DScope
+import com.mindovercnc.linuxcnc.canvas.CanvasActor
+import com.mindovercnc.linuxcnc.canvas.rotateBy
 import com.mindovercnc.linuxcnc.format.toFixedDigitsString
 import com.mindovercnc.model.HandWheelsUiModel
 import ktcnc.frontend.screen.manual.generated.resources.Res
-import org.jetbrains.compose.resources.*
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun HandWheelStatus(uiModel: HandWheelsUiModel?, modifier: Modifier = Modifier) {
@@ -46,7 +48,10 @@ fun HandWheelStatus(uiModel: HandWheelsUiModel?, modifier: Modifier = Modifier) 
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Canvas(modifier = Modifier) { JogIncrementActor(centerPoint = this.center).drawInto(this) }
+            Canvas2D(modifier = Modifier) { drawScope ->
+                val actor = JogIncrementActor(centerPoint = drawScope.center)
+                with(actor) { drawInto(drawScope) }
+            }
             Spacer(modifier = Modifier.height(12.dp))
             Text(
                 text = uiModel?.increment?.toDouble()?.toFixedDigitsString(3) ?: "x.xxx",
@@ -148,7 +153,9 @@ private class JogIncrementActor(
         )
     }
 
-    override fun drawInto(drawScope: DrawScope) {
-        actors.forEach { it.drawInto(drawScope) }
+    override fun Canvas2DScope.drawInto(drawScope: DrawScope) {
+        for (actor in actors) {
+            with(actor) { drawInto(drawScope) }
+        }
     }
 }

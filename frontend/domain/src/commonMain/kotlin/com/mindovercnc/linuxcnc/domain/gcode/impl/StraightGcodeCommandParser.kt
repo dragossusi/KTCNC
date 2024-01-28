@@ -1,9 +1,9 @@
 package com.mindovercnc.linuxcnc.domain.gcode.impl
 
-import actor.PathElement
+import com.mindovercnc.linuxcnc.actor.PathElement
 import com.mindovercnc.linuxcnc.domain.gcode.GcodeCommandParseScope
 import com.mindovercnc.linuxcnc.domain.gcode.GcodeCommandParser
-import com.mindovercnc.linuxcnc.gcode.model.GCodeCommand
+import com.mindovercnc.linuxcnc.reader.gcode.GCodeCommand
 import com.mindovercnc.model.Point3D
 
 /** [GcodeCommandParser] that handles straight commands. */
@@ -25,10 +25,10 @@ object StraightGcodeCommandParser : GcodeCommandParser {
                     startPoint = point,
                     endPoint = current,
                     type =
-                        when (command.name) {
-                            "STRAIGHT_FEED" -> PathElement.Line.Type.Feed
-                            else -> PathElement.Line.Type.Traverse
-                        }
+                    when (command.name) {
+                        "STRAIGHT_FEED" -> PathElement.Line.Type.Feed
+                        else -> PathElement.Line.Type.Traverse
+                    }
                 )
             }
         return element.also { lastPoint = current }

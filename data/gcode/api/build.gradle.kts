@@ -24,6 +24,8 @@ kotlin {
                 implementation(project(":editor"))
                 implementation(Libs.okio)
 
+                api(project(":reader:gcode"))
+
                 // logging
                 implementation(Libs.Log.logging)
             }
