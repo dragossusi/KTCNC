@@ -2,10 +2,11 @@ package com.mindovercnc.linuxcnc.screen.programs.picker
 
 import com.arkivanov.decompose.ComponentContext
 import com.mindovercnc.data.linuxcnc.FileSystemRepository
-import com.mindovercnc.editor.EditorLoader
+import com.mindovercnc.editor.impl.EditorLoaderImpl
 import com.mindovercnc.linuxcnc.domain.BreadCrumbDataUseCase
 import com.mindovercnc.linuxcnc.domain.FileSystemDataUseCase
 import com.mindovercnc.linuxcnc.screen.BaseScreenModel
+import editor.EditorState
 import kotlinx.coroutines.flow.update
 import mu.KotlinLogging
 import okio.FileSystem
@@ -19,7 +20,7 @@ class ProgramPickerScreenModel(di: DI, componentContext: ComponentContext) :
 
     private val fileSystemRepository: FileSystemRepository by di.instance()
     private val fileSystem: FileSystem by di.instance()
-    private val editorLoader: EditorLoader by di.instance()
+    private val editorLoader: EditorLoaderImpl by di.instance()
     private val fileSystemDataUseCase: FileSystemDataUseCase by di.instance()
     private val breadCrumbDataUseCase: BreadCrumbDataUseCase by di.instance()
 
@@ -46,6 +47,7 @@ class ProgramPickerScreenModel(di: DI, componentContext: ComponentContext) :
                 println("---Folder clicked: $item")
                 loadFolderContents(item)
             }
+
             metadata.isRegularFile -> {
                 setCurrentFile(item)
             }
@@ -74,9 +76,12 @@ class ProgramPickerScreenModel(di: DI, componentContext: ComponentContext) :
     private fun setCurrentFile(file: Path?) {
         logger.info { "Setting current file to $file" }
         mutableState.update {
-            it.copy(
-                editor = if (file != null) editorLoader.loadEditor(file) else null,
-            )
+            it.copy(editorState = file?.let(::createEditorState))
         }
+    }
+
+    private fun createEditorState(path: Path): EditorState {
+        val editor = editorLoader.loadEditor(path)
+        return EditorState(editor)
     }
 }

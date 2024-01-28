@@ -53,6 +53,14 @@ class RootScreenModel(
 
     override val childStack: Value<ChildStack<*, RootChild>> = _childStack
 
+    override val tabs: List<Config> = listOf(
+        Config.Manual,
+        Config.Conversational,
+        Config.Programs,
+        Config.Tools,
+        Config.Status,
+    )
+
     override fun openTab(tab: Config) {
         navigation.bringToFront(tab)
     }

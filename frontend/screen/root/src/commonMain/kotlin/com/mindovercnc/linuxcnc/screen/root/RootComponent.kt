@@ -12,6 +12,7 @@ import kotlinx.serialization.Serializable
 import org.kodein.di.compose.localDI
 
 interface RootComponent : BackHandlerOwner {
+    val tabs: List<Config>
     val childStack: Value<ChildStack<*, RootChild>>
 
     val state: StateFlow<RootState>
@@ -20,11 +21,16 @@ interface RootComponent : BackHandlerOwner {
 
     @Serializable
     sealed interface Config {
-        @Serializable data object Manual : Config
-        @Serializable data object Conversational : Config
-        @Serializable data object Programs : Config
-        @Serializable data object Tools : Config
-        @Serializable data object Status : Config
+        @Serializable
+        data object Manual : Config
+        @Serializable
+        data object Conversational : Config
+        @Serializable
+        data object Programs : Config
+        @Serializable
+        data object Tools : Config
+        @Serializable
+        data object Status : Config
     }
 }
 

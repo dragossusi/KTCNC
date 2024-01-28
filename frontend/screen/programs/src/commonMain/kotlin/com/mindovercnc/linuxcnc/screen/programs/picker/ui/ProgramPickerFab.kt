@@ -20,10 +20,10 @@ fun ProgramPickerFab(
 ) {
     val state by component.state.collectAsState()
 
-    state.editor?.let { editor ->
+    state.editorState?.let { editorState ->
         ExtendedFloatingActionButton(
             text = { Text("Load Program") },
-            onClick = { rootComponent.openProgram(editor.file) },
+            onClick = { rootComponent.openProgram(editorState.editor.file) },
             icon = {
                 Icon(
                     Icons.Default.ExitToApp,

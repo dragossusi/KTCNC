@@ -22,7 +22,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import com.mindovercnc.editor.Editor
 import com.mindovercnc.editor.textlines.TextLineContent
 import com.mindovercnc.editor.textlines.TextLines
 import com.mindovercnc.editor.type.EditorFileType
@@ -38,26 +37,26 @@ import kotlin.text.Regex.Companion.fromLiteral
 
 @Composable
 fun EditorView(
-    model: Editor,
-    settings: EditorSettings,
+    state: EditorState,
     showFileName: Boolean = true,
     modifier: Modifier = Modifier
-) =
+) {
+    val model = state.editor
     key(model) {
         val editorTheme = LocalEditorTheme.current
         Surface(
             modifier = modifier,
             color = editorTheme.background.toColor(),
         ) {
-            val lines by loadableScoped(model.lines)
+            val (lines) = loadableScoped(model.lines)
 
             if (lines != null) {
                 TypedEditor(model.file) {
                     Lines(
                         file = model.file,
-                        lines = lines!!,
+                        lines = lines,
                         showFileName = showFileName,
-                        settings = settings,
+                        settings = state.settings,
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -66,6 +65,7 @@ fun EditorView(
             }
         }
     }
+}
 
 @Composable
 private fun TypedEditor(path: Path, content: @Composable () -> Unit) {
@@ -156,9 +156,9 @@ private fun Line(
             LineContent(
                 line = line,
                 modifier =
-                    Modifier.weight(1f)
-                        .withoutWidthConstraints()
-                        .padding(start = 28.dp, end = 12.dp),
+                Modifier.weight(1f)
+                    .withoutWidthConstraints()
+                    .padding(start = 28.dp, end = 12.dp),
                 settings = settings
             )
         }
@@ -173,10 +173,10 @@ private fun LineContent(
 ) {
     Text(
         text =
-            when (LocalEditorFileType.current) {
-                EditorFileType.GCODE -> codeString(line.text)
-                EditorFileType.NORMAL -> normalString(line.text)
-            },
+        when (LocalEditorFileType.current) {
+            EditorFileType.GCODE -> codeString(line.text)
+            EditorFileType.NORMAL -> normalString(line.text)
+        },
         fontSize = settings.fontSize,
         fontFamily = FontFamily.Monospace,
         modifier = modifier,

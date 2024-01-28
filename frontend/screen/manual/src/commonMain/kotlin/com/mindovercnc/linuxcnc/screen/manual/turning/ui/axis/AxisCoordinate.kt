@@ -19,8 +19,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mindovercnc.linuxcnc.format.toFixedDigitsString
-import com.mindovercnc.model.CoordinateUiModel
 import com.mindovercnc.model.CoordinateAxis
+import com.mindovercnc.model.CoordinateUiModel
 
 @Composable
 fun AxisCoordinate(
@@ -112,7 +112,7 @@ private fun Position(
         Text(
             modifier = modifier.width(positionType.width),
             text =
-                (value * (if (isDiameterMode) 2 else 1)).toFixedDigitsString(uiModel.displayDigits),
+            (value * (if (isDiameterMode) 2 else 1)).toFixedDigitsString(uiModel.displayDigits),
             fontSize = positionType.fontSize,
             fontFamily = FontFamily.Monospace,
             fontWeight = FontWeight.Thin,
@@ -133,7 +133,6 @@ private fun Units(units: String, modifier: Modifier = Modifier) {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ZeroPos(onClick: () -> Unit, modifier: Modifier = Modifier) {
     Surface(
@@ -147,38 +146,38 @@ private fun ZeroPos(onClick: () -> Unit, modifier: Modifier = Modifier) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             drawLine(
                 start =
-                    Offset(
-                        0f + ZeroPosTokens.innerPadding.toPx(),
-                        this.size.height -
+                Offset(
+                    0f + ZeroPosTokens.innerPadding.toPx(),
+                    this.size.height -
                             ZeroPosTokens.innerPadding.toPx() -
                             ZeroPosTokens.distanceBetweenLines.toPx() / 2
-                    ),
+                ),
                 end =
-                    Offset(
-                        this.size.width -
+                Offset(
+                    this.size.width -
                             ZeroPosTokens.innerPadding.toPx() -
                             ZeroPosTokens.distanceBetweenLines.toPx() / 2,
-                        0f + ZeroPosTokens.innerPadding.toPx()
-                    ),
+                    0f + ZeroPosTokens.innerPadding.toPx()
+                ),
                 color = color,
                 cap = ZeroPosTokens.linesCap,
                 strokeWidth = ZeroPosTokens.lineThickness.toPx()
             )
             drawLine(
                 start =
-                    Offset(
-                        0f +
+                Offset(
+                    0f +
                             ZeroPosTokens.innerPadding.toPx() +
                             ZeroPosTokens.distanceBetweenLines.toPx() / 2,
-                        this.size.height - ZeroPosTokens.innerPadding.toPx()
-                    ),
+                    this.size.height - ZeroPosTokens.innerPadding.toPx()
+                ),
                 end =
-                    Offset(
-                        this.size.width - ZeroPosTokens.innerPadding.toPx(),
-                        0f +
+                Offset(
+                    this.size.width - ZeroPosTokens.innerPadding.toPx(),
+                    0f +
                             ZeroPosTokens.innerPadding.toPx() +
                             ZeroPosTokens.distanceBetweenLines.toPx() / 2
-                    ),
+                ),
                 color = color,
                 cap = ZeroPosTokens.linesCap,
                 strokeWidth = ZeroPosTokens.lineThickness.toPx()
@@ -200,13 +199,13 @@ private fun AbsRel(onClick: () -> Unit, isIncremental: Boolean, modifier: Modifi
         val textPadding: Dp = 4.dp
         Box(
             modifier =
-                Modifier.drawBehind {
-                    drawLine(
-                        start = Offset(0f, this.size.height),
-                        end = Offset(this.size.width, 0f),
-                        color = Color.LightGray
-                    )
-                }
+            Modifier.drawBehind {
+                drawLine(
+                    start = Offset(0f, this.size.height),
+                    end = Offset(this.size.width, 0f),
+                    color = Color.LightGray
+                )
+            }
         ) {
             val color = LocalContentColor.current
             val absColor = if (!isIncremental) color else color.copy(alpha = 0.2f)
@@ -216,16 +215,16 @@ private fun AbsRel(onClick: () -> Unit, isIncremental: Boolean, modifier: Modifi
                 color = absColor,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier =
-                    Modifier.align(Alignment.TopStart)
-                        .padding(start = textPadding, top = textPadding)
+                Modifier.align(Alignment.TopStart)
+                    .padding(start = textPadding, top = textPadding)
             )
             Text(
                 text = "INC",
                 color = incColor,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier =
-                    Modifier.align(Alignment.BottomEnd)
-                        .padding(end = textPadding, bottom = textPadding)
+                Modifier.align(Alignment.BottomEnd)
+                    .padding(end = textPadding, bottom = textPadding)
             )
         }
     }

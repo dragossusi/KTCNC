@@ -21,6 +21,7 @@ kotlin {
                 implementation(Libs.Coroutines.core)
                 implementation(Libs.Serialization.json_okio)
                 implementation(Libs.okio)
+                implementation(Libs.Kodein.core)
             }
         }
     }

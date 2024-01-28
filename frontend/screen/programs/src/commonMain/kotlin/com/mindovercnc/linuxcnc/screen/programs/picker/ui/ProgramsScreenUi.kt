@@ -6,17 +6,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.screen.programs.picker.ProgramPickerState
+import com.mindovercnc.linuxcnc.widgets.VerticalDivider
 import components.breadcrumb.BreadcrumbView
 import components.filesystem.FileSystemView
 import editor.EditorEmptyView
-import editor.EditorSettings
 import editor.EditorView
-import com.mindovercnc.linuxcnc.widgets.VerticalDivider
 
 @Composable
 fun ProgramsScreenUi(state: ProgramPickerState, modifier: Modifier = Modifier) {
-    val settings = EditorSettings()
-
     Column(modifier = modifier) {
         BreadcrumbView(
             data = state.breadCrumbData,
@@ -36,8 +33,8 @@ fun ProgramsScreenUi(state: ProgramPickerState, modifier: Modifier = Modifier) {
             VerticalDivider()
 
             // editor
-            if (state.editor != null) {
-                EditorView(model = state.editor, settings = settings, modifier = itemModifier)
+            if (state.editorState != null) {
+                EditorView(state.editorState, modifier = itemModifier)
             } else {
                 EditorEmptyView(modifier = itemModifier)
             }

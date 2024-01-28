@@ -1,4 +1,6 @@
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalMinimumInteractiveComponentEnforcement
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -12,6 +14,7 @@ import com.mindovercnc.linuxcnc.screen.root.createRootComponent
 import com.mindovercnc.linuxcnc.screen.root.ui.RootUi
 import themes.AppTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ApplicationScope.AppWindow(
     appConfig: AppConfig,
@@ -31,7 +34,10 @@ fun ApplicationScope.AppWindow(
         state = windowState
     ) {
         val newDensity = Density(density = appConfig.density.toFloat())
-        CompositionLocalProvider(LocalDensity provides newDensity) {
+        CompositionLocalProvider(
+            LocalDensity provides newDensity,
+            LocalMinimumInteractiveComponentEnforcement provides false,
+        ) {
             AppTheme(appConfig.darkMode) {
                 val root = createRootComponent(componentContext)
                 RootUi(root = root, modifier = Modifier.fillMaxSize())

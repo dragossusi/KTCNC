@@ -5,7 +5,7 @@ import androidx.compose.ui.unit.IntSize
 import com.arkivanov.decompose.ComponentContext
 import com.mindovercnc.data.linuxcnc.IniFileRepository
 import com.mindovercnc.dispatchers.IoDispatcher
-import com.mindovercnc.editor.EditorLoader
+import com.mindovercnc.editor.impl.EditorLoaderImpl
 import com.mindovercnc.linuxcnc.actor.PathActor
 import com.mindovercnc.linuxcnc.actor.ProgramData
 import com.mindovercnc.linuxcnc.domain.*
@@ -15,6 +15,7 @@ import com.mindovercnc.linuxcnc.domain.model.ZoomRange
 import com.mindovercnc.linuxcnc.screen.BaseScreenModel
 import com.mindovercnc.linuxcnc.screen.programs.programloaded.ui.ToolChangeModel
 import com.mindovercnc.model.MachineLimits
+import editor.EditorState
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -36,7 +37,7 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
     private val positionUseCase: PositionUseCase by di.instance()
     private val activeCodesUseCase: ActiveCodesUseCase by di.instance()
     private val programsUseCase: ProgramsUseCase by di.instance()
-    private val editorLoader: EditorLoader by di.instance()
+    private val editorLoader: EditorLoaderImpl by di.instance()
     private val spindleUseCase: SpindleUseCase by di.instance()
     private val feedUseCase: FeedUseCase by di.instance()
     private val iniFileRepository: IniFileRepository by di.instance()
@@ -50,7 +51,7 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
     init {
         coroutineScope.launch(ioDispatcher.dispatcher) {
             val editor = editorLoader.loadEditor(file)
-            mutableState.update { it.copy(editor = editor) }
+            mutableState.update { it.copy(editorState = EditorState(editor)) }
         }
 
         // programsUseCase.loadProgram(file)
@@ -110,12 +111,10 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
             .getToolPosition()
             .onEach { point ->
                 toolTrace.add(point)
-                mutableState.update {
-                    it.copy(
+                mutableState.update { currentState ->
+                    currentState.copy(
                         visualTurningState =
-                        it.visualTurningState.copy(
-                            toolPosition = point,
-                        )
+                        currentState.visualTurningState.copy(toolPosition = point)
                     )
                 }
             }
@@ -163,13 +162,11 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
             .onEach { toolNo ->
                 println("---update state: $toolNo")
                 mutableState.update {
-                    it.copy(
-                        toolChangeModel =
-                        when {
-                            toolNo != null -> ToolChangeModel(toolNo)
-                            else -> null
-                        }
-                    )
+                    val toolChangeModel = when {
+                        toolNo != null -> ToolChangeModel(toolNo)
+                        else -> null
+                    }
+                    it.copy(toolChangeModel = toolChangeModel)
                 }
             }
             .launchIn(coroutineScope)
@@ -180,6 +177,20 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
     override fun zoomIn() = setNewScale { it + 0.25f }
 
     override fun zoomBy(factor: Float) = setNewScale { it * factor }
+
+    override fun center() {
+        mutableState.update { currentState ->
+            currentState.copy(
+                visualTurningState =
+                currentState.visualTurningState.copy(
+                    translate =
+                    currentState.visualTurningState.pathUiState.getInitialTranslate(
+                        viewportSize = currentState.visualTurningState.viewportSize
+                    )
+                )
+            )
+        }
+    }
 
     override fun translate(offset: Offset) {
         mutableState.update {
@@ -221,13 +232,14 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
 
     private fun setNewScale(block: (Float) -> Float) {
         mutableState.update { currentState ->
-            val newScale = block(mutableState.value.visualTurningState.scale)
+            val newScale = block(currentState.visualTurningState.scale)
 
             if (newScale !in ZoomRange) {
                 // don't update if value outside of range
                 return@update currentState
             }
 
+            val scaleDelta = newScale - currentState.visualTurningState.scale
             val pixelPerUnit = currentState.visualTurningState.defaultPixelsPerUnit * newScale
             val pathUiState = currentState.visualTurningState.pathUiState.rescaled(pixelPerUnit)
             val rulers = currentState.visualTurningState.programRulers.rescaled(pixelPerUnit)
@@ -237,10 +249,6 @@ class ProgramLoadedScreenModel(di: DI, componentContext: ComponentContext) :
                     scale = newScale,
                     pathUiState = pathUiState,
                     programRulers = rulers,
-                    translate =
-                    pathUiState.getInitialTranslate(
-                        viewportSize = currentState.visualTurningState.viewportSize
-                    )
                 )
             )
         }

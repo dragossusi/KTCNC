@@ -9,6 +9,7 @@ interface ProgramLoadedComponent : AppScreenComponent<ProgramLoadedState> {
     fun zoomOut()
     fun zoomIn()
     fun zoomBy(factor: Float)
+    fun center()
     fun translate(offset: Offset)
     fun setViewportSize(size: IntSize)
     fun runProgram()
