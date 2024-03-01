@@ -1,7 +1,11 @@
 package com.mindovercnc.linuxcnc.screen.tools.list.tabs.lathetool.ui
 
 import com.mindovercnc.model.TipOrientation
+import ktcnc.frontend.screen.tools.generated.resources.*
 import ktcnc.frontend.screen.tools.generated.resources.Res
+import ktcnc.frontend.screen.tools.generated.resources.position1
+import ktcnc.frontend.screen.tools.generated.resources.position2
+import ktcnc.frontend.screen.tools.generated.resources.position3
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 object TipOrientationPainter {

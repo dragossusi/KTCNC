@@ -22,6 +22,7 @@ import com.mindovercnc.linuxcnc.canvas.rotateBy
 import com.mindovercnc.linuxcnc.format.toFixedDigitsString
 import com.mindovercnc.model.HandWheelsUiModel
 import ktcnc.frontend.screen.manual.generated.resources.Res
+import ktcnc.frontend.screen.manual.generated.resources.hwheel
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 

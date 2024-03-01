@@ -1,6 +1,6 @@
 object Versions {
-    const val kotlin = "1.9.20"
-    const val compose = "1.6.0-beta01"
+    const val kotlin = "1.9.22"
+    const val compose = "1.6.0"
     const val kodein = "7.21.1"
     const val exposed = "0.46.0"
     const val sqliteJdbc = "3.41.2.1"
@@ -12,13 +12,13 @@ object Versions {
 
     const val bignum = "0.3.8"
     const val mockk = "1.13.7"
-    const val decompose = "3.0.0-alpha05"
+    const val decompose = "3.0.0-alpha07"
 
     object Kotlinx {
-        const val datetime = "0.5.0"
+        const val datetime = "0.6.0-RC"
         const val cli = "0.3.6"
-        const val coroutines = "1.8.0-RC2"
-        const val serialization = "1.6.2"
+        const val coroutines = "1.8.0"
+        const val serialization = "1.6.3"
     }
 
     object Log {

@@ -16,6 +16,9 @@ import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.widgets.cards.CardWithTitle
 import com.mindovercnc.model.SpindleDirection
 import ktcnc.frontend.screen.tools.generated.resources.Res
+import ktcnc.frontend.screen.tools.generated.resources.spindle_both
+import ktcnc.frontend.screen.tools.generated.resources.spindle_fwd
+import ktcnc.frontend.screen.tools.generated.resources.spindle_rev
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 

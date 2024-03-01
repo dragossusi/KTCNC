@@ -13,6 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.tools.model.ToolType
 import ktcnc.frontend.screen.tools.generated.resources.Res
+import ktcnc.frontend.screen.tools.generated.resources.lathe_tool
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 

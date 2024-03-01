@@ -9,6 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ktcnc.frontend.filesystem.generated.resources.Res
+import ktcnc.frontend.filesystem.generated.resources.folder_icon
+import ktcnc.frontend.filesystem.generated.resources.gcode
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 

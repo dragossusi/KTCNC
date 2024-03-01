@@ -17,6 +17,7 @@ import com.mindovercnc.linuxcnc.numpad.data.InputType
 import com.mindovercnc.linuxcnc.screen.manual.simplecycles.SimpleCyclesComponent
 import com.mindovercnc.model.SimpleCycleParameters
 import ktcnc.frontend.screen.manual.generated.resources.Res
+import ktcnc.frontend.screen.manual.generated.resources.od_turn_details
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 

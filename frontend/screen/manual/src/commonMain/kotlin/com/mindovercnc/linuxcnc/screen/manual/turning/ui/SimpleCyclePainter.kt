@@ -1,7 +1,11 @@
 package com.mindovercnc.linuxcnc.screen.manual.turning.ui
 
 import com.mindovercnc.model.SimpleCycle
+import ktcnc.frontend.screen.manual.generated.resources.*
 import ktcnc.frontend.screen.manual.generated.resources.Res
+import ktcnc.frontend.screen.manual.generated.resources.id_turn
+import ktcnc.frontend.screen.manual.generated.resources.od_chamfer
+import ktcnc.frontend.screen.manual.generated.resources.od_turn
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 

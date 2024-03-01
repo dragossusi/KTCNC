@@ -15,11 +15,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.tools.model.ToolHolderType
+import ktcnc.frontend.screen.tools.generated.resources.*
 import ktcnc.frontend.screen.tools.generated.resources.Res
+import ktcnc.frontend.screen.tools.generated.resources.multifix_boring
+import ktcnc.frontend.screen.tools.generated.resources.multifix_centered
+import ktcnc.frontend.screen.tools.generated.resources.multifix_generic
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ToolHolderView(
     type: ToolHolderType,

@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import com.mindovercnc.linuxcnc.screen.root.RootComponent
 import com.mindovercnc.linuxcnc.screen.root.child.RootChild
 import ktcnc.frontend.screen.root.generated.resources.Res
+import ktcnc.frontend.screen.root.generated.resources.manual_tab
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 

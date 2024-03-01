@@ -1,8 +1,12 @@
 package screen.composables.tabconversational
 
+import ktcnc.frontend.compose.generated.resources.*
+import ktcnc.frontend.compose.generated.resources.Res
+import ktcnc.frontend.compose.generated.resources.id
+import ktcnc.frontend.compose.generated.resources.lathe_depth_step
+import ktcnc.frontend.compose.generated.resources.od
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import ktcnc.frontend.compose.generated.resources.Res
 
 object ConversationalOperationPainter {
     @OptIn(ExperimentalResourceApi::class)
