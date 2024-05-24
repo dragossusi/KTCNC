@@ -15,6 +15,7 @@ unused*
 bin*
 .gradle/
 .idea/
+.kotlin/
 
 **/build
 *.bazel

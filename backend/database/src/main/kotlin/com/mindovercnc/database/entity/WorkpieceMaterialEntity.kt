@@ -1,14 +1,12 @@
 package com.mindovercnc.database.entity
 
-import com.mindovercnc.database.table.WorkpieceMaterialTable
-import org.jetbrains.exposed.dao.IntEntity
-import org.jetbrains.exposed.dao.IntEntityClass
-import org.jetbrains.exposed.dao.id.EntityID
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-class WorkpieceMaterialEntity(id: EntityID<Int>) : IntEntity(id) {
-
-    var name by WorkpieceMaterialTable.name
-    var category by WorkpieceMaterialTable.category
-
-    companion object : IntEntityClass<WorkpieceMaterialEntity>(WorkpieceMaterialTable)
-}
+@Entity
+class WorkpieceMaterialEntity(
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    @ColumnInfo("name") val name: String,
+    @ColumnInfo("category") val category: String,
+)

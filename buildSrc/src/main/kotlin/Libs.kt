@@ -59,6 +59,11 @@ object Libs {
         const val jdbc = "org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}"
     }
 
+    object Room {
+        const val compiler = "androidx.room:room-compiler:${Versions.room}"
+        const val runtime = "androidx.room:room-runtime:${Versions.room}"
+    }
+
     object Grpc {
         const val grpc_kotlin = "io.grpc:grpc-kotlin-stub:${Versions.Grpc.grpc_kotlin}"
         const val grpc_proto = "io.grpc:grpc-protobuf:${Versions.Grpc.grpc}"

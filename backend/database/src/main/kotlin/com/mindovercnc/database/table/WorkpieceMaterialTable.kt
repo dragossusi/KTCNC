@@ -10,6 +10,7 @@ enum class MaterialCategory(val material: String) {
     S("Super Alloys"),
     H("Hardened Steel"),
 }
+
 object WorkpieceMaterialTable : IntIdTable() {
     val name = varchar("name", 50)
     val category = varchar("category", 50)

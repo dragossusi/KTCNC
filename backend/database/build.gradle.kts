@@ -1,6 +1,9 @@
 import Versions.sqliteJdbc
 
-plugins { kotlin("jvm") }
+plugins {
+    kotlin("jvm")
+    id("com.google.devtools.ksp")
+}
 
 version = Versions.app
 
@@ -20,6 +23,8 @@ dependencies {
     implementation(Libs.okio)
 
     implementation("org.xerial:sqlite-jdbc:$sqliteJdbc")
+    implementation(Libs.Room.runtime)
+    ksp(Libs.Room.compiler)
 
     implementation(project(":dispatcher"))
     implementation(project(":initializer"))

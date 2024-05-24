@@ -8,11 +8,9 @@ pluginManagement {
     }
 }
 
-// database
+// backend
 run {
     include("backend:database")
-
-    include("backend:schema")
 }
 
 // data
