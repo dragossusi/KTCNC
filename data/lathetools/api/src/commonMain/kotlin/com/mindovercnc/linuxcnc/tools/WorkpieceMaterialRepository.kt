@@ -7,8 +7,8 @@ import com.mindovercnc.linuxcnc.tools.model.WorkpieceMaterial
 interface WorkpieceMaterialRepository {
 
     /** Insert a [WorkpieceMaterial] into the database. */
-    fun insert(wpMaterial: WorkpieceMaterial)
+    suspend fun insert(wpMaterial: WorkpieceMaterial)
 
     /** Finds all the [WorkpieceMaterial] in the database. */
-    fun findAll(): List<WorkpieceMaterial>
+    suspend fun findAll(): List<WorkpieceMaterial>
 }

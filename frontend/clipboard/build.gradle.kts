@@ -7,4 +7,6 @@ kotlin {
     js(IR) {
         browser()
     }
+
+    compilerOptions { freeCompilerArgs.add("-Xexpect-actual-classes") }
 }

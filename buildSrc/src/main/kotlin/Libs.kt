@@ -64,6 +64,10 @@ object Libs {
         const val runtime = "androidx.room:room-runtime:${Versions.room}"
     }
 
+    object Sqlite {
+        const val bundled = "androidx.sqlite:sqlite-bundled:${Versions.sqlite}"
+    }
+
     object Grpc {
         const val grpc_kotlin = "io.grpc:grpc-kotlin-stub:${Versions.Grpc.grpc_kotlin}"
         const val grpc_proto = "io.grpc:grpc-protobuf:${Versions.Grpc.grpc}"

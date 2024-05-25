@@ -1,5 +1,7 @@
 package com.mindovercnc.linuxcnc.tools.local
 
+import com.mindovercnc.database.dao.CuttingInsertDao
+import com.mindovercnc.database.dao.ToolHolderDao
 import com.mindovercnc.database.entity.LatheToolEntity
 import com.mindovercnc.database.entity.ToolHolderEntity
 import com.mindovercnc.database.table.ToolHolderTable
@@ -15,27 +17,29 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import org.jetbrains.exposed.sql.update
 
 /** Implementation for [ToolHolderRepository]. */
-class ToolHolderRepositoryLocal : ToolHolderRepository {
+class ToolHolderRepositoryLocal(
+    private val toolHolderDao: ToolHolderDao,
+    private val cuttingInsertDao: CuttingInsertDao
+) : ToolHolderRepository {
 
     override suspend fun getToolHolders(): List<ToolHolder> {
-        return transaction {
-            ToolHolderEntity.all().map {
+        return toolHolderDao.getAllWithCutter().map { (cutter, toolHolder) ->
                 ToolHolder(
-                    holderNumber = it.holderNumber,
-                    type = it.holderType,
-                    latheTool = it.cutter?.toLatheTool(),
-                    xOffset = it.xOffset,
-                    zOffset = it.zOffset
+                    holderNumber = toolHolder.holderNumber,
+                    type = toolHolder.holderType,
+                    latheTool = cutter?.toLatheTool(),
+                    xOffset = toolHolder.xOffset,
+                    zOffset = toolHolder.zOffset
                 )
             }
-        }
     }
 
-    private fun LatheToolEntity.toLatheTool(): LatheTool? {
+    private suspend fun LatheToolEntity.toLatheTool(): LatheTool? {
+        val insert = insertId?.let { cuttingInsertDao.getById(it) }
         return when (type) {
             ToolType.Turning ->
                 LatheTool.Turning(
-                    toolId = id.value,
+                    toolId = id,
                     insert = insert!!.toCuttingInsert(),
                     tipOrientation = TipOrientation.getOrientation(tipOrientation),
                     frontAngle = frontAngle!!,
@@ -44,7 +48,7 @@ class ToolHolderRepositoryLocal : ToolHolderRepository {
                 )
             ToolType.Boring ->
                 LatheTool.Boring(
-                    toolId = id.value,
+                    toolId = id,
                     insert = insert!!.toCuttingInsert(),
                     tipOrientation = TipOrientation.getOrientation(tipOrientation),
                     frontAngle = frontAngle!!,
@@ -55,28 +59,28 @@ class ToolHolderRepositoryLocal : ToolHolderRepository {
                 )
             ToolType.Drilling ->
                 LatheTool.Drilling(
-                    toolId = id.value,
+                    toolId = id,
                     insert = null,
                     toolDiameter = toolDiameter!!,
                     maxZDepth = maxZDepth ?: 0.0
                 )
             ToolType.Reaming ->
                 LatheTool.Reaming(
-                    toolId = id.value,
+                    toolId = id,
                     insert = null,
                     toolDiameter = toolDiameter!!,
                     maxZDepth = maxZDepth ?: 0.0
                 )
             ToolType.Parting ->
                 LatheTool.Parting(
-                    toolId = id.value,
+                    toolId = id,
                     insert = insert!!.toCuttingInsert(),
                     bladeWidth = bladeWidth!!,
                     maxXDepth = maxXDepth ?: 0.0
                 )
             ToolType.Grooving ->
                 LatheTool.Grooving(
-                    toolId = id.value,
+                    toolId = id,
                     insert = insert!!.toCuttingInsert(),
                     tipOrientation = TipOrientation.getOrientation(tipOrientation),
                     spindleDirection = spindleDirection,
@@ -85,21 +89,21 @@ class ToolHolderRepositoryLocal : ToolHolderRepository {
                 )
             ToolType.OdThreading ->
                 LatheTool.OdThreading(
-                    toolId = id.value,
+                    toolId = id,
                     insert = insert!!.toCuttingInsert(),
                     minPitch = minThreadPitch ?: 0.0,
                     maxPitch = maxThreadPitch ?: 0.0
                 )
             ToolType.IdThreading ->
                 LatheTool.IdThreading(
-                    toolId = id.value,
+                    toolId = id,
                     insert = insert!!.toCuttingInsert(),
                     minPitch = minThreadPitch ?: 0.0,
                     maxPitch = maxThreadPitch ?: 0.0
                 )
             ToolType.Slotting ->
                 LatheTool.Slotting(
-                    toolId = id.value,
+                    toolId = id,
                     insert = null,
                     bladeWidth = bladeWidth!!,
                     maxZDepth = maxZDepth ?: 0.0
@@ -109,16 +113,16 @@ class ToolHolderRepositoryLocal : ToolHolderRepository {
     }
 
     override suspend fun createToolHolder(toolHolder: ToolHolder) {
-        transaction {
-            ToolHolderEntity.new {
-                holderNumber = toolHolder.holderNumber
-                holderType = toolHolder.type
-                cutter = null
-                clampingPosition = 0
-                xOffset = toolHolder.xOffset
-                zOffset = toolHolder.zOffset
-            }
-        }
+        val entity =
+            ToolHolderEntity(
+                holderNumber = toolHolder.holderNumber,
+                holderType = toolHolder.type,
+                cutterId = null,
+                clampingPosition = 0,
+                xOffset = toolHolder.xOffset,
+                zOffset = toolHolder.zOffset,
+            )
+        toolHolderDao.insert(entity)
     }
 
     override suspend fun updateToolHolder(toolHolder: ToolHolder) {

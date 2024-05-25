@@ -1,19 +1,23 @@
 package com.mindovercnc.linuxcnc.tools.local
 
+import com.mindovercnc.database.dao.WorkPieceMaterialDao
 import com.mindovercnc.database.entity.WorkpieceMaterialEntity
 import com.mindovercnc.linuxcnc.tools.WorkpieceMaterialRepository
 import com.mindovercnc.linuxcnc.tools.model.WorkpieceMaterial
-import org.jetbrains.exposed.sql.transactions.transaction
 
 
 /** Implementation for [WorkpieceMaterialRepository]. */
-class WorkpieceMaterialRepositoryLocal : WorkpieceMaterialRepository {
+class WorkpieceMaterialRepositoryLocal(
+    private val workPieceMaterialDao: WorkPieceMaterialDao
+) : WorkpieceMaterialRepository {
 
-    override fun insert(wpMaterial: WorkpieceMaterial) {
-        WorkpieceMaterialEntity.new { name = wpMaterial.name }
+    override suspend fun insert(wpMaterial: WorkpieceMaterial) {
+        val entity = WorkpieceMaterialEntity(name = wpMaterial.name, category = "")
+        workPieceMaterialDao.insert(entity)
     }
 
-    override fun findAll(): List<WorkpieceMaterial> {
-        return transaction { WorkpieceMaterialEntity.all().map { it.toWorkpieceMaterial() } }
+    override suspend fun findAll(): List<WorkpieceMaterial> {
+        return workPieceMaterialDao.getAll().map { it.toWorkpieceMaterial() }
     }
+
 }

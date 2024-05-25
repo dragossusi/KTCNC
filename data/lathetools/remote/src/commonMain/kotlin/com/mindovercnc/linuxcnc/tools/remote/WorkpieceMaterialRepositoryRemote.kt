@@ -13,11 +13,11 @@ class WorkpieceMaterialRepositoryRemote : WorkpieceMaterialRepository {
         LOG.warn { "Remote implementation is missing" }
     }
 
-    override fun insert(wpMaterial: WorkpieceMaterial) {
+    override suspend fun insert(wpMaterial: WorkpieceMaterial) {
         /* no-op */
     }
 
-    override fun findAll(): List<WorkpieceMaterial> {
+    override suspend fun findAll(): List<WorkpieceMaterial> {
         /* no-op */
         return emptyList()
     }

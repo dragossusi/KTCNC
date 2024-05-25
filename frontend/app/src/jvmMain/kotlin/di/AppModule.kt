@@ -2,7 +2,6 @@ package di
 
 import AppConfig
 import Communication
-import Files
 import StatusWatcher
 import androidx.compose.runtime.Composable
 import com.mindovercnc.data.lathehal.local.di.LatheHalLocalDataModule
@@ -31,7 +30,7 @@ val BaseAppModule =
         importAll(
             DispatchersModule,
             EditorModule,
-            databaseModule(Files.appDir),
+            databaseModule(),
             InitializerModule,
             DomainModule,
         )

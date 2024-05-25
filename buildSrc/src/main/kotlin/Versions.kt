@@ -6,10 +6,11 @@ object Versions {
     const val exposed = "0.46.0"
     const val sqliteJdbc = "3.41.2.1"
     const val okio = "3.7.0"
-    const val wire = "4.9.5"
+    const val wire = "4.9.9"
     const val roborazzi = "1.9.0"
 
     const val room = "2.7.0-alpha02"
+    const val sqlite = "2.5.0-alpha02"
 
     const val bignum = "0.3.8"
     const val mockk = "1.13.7"

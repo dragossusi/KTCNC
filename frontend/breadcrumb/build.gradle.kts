@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.compose")
     id("org.jetbrains.compose")
     id("io.github.takahirom.roborazzi")
 }
@@ -41,5 +42,5 @@ kotlin {
 
 // Roborazzi Desktop support uses Context Receivers
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions { freeCompilerArgs += "-Xcontext-receivers" }
+    compilerOptions { freeCompilerArgs.add("-Xcontext-receivers") }
 }

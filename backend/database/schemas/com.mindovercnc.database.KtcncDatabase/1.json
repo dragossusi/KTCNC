@@ -1,0 +1,343 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "d425b47475b017839da1f3626b49b9f7",
+    "entities": [
+      {
+        "tableName": "cutting_insert",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `made_of` TEXT NOT NULL, `code` TEXT, `tip_radius` REAL NOT NULL, `tip_angle` REAL NOT NULL, `size` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "madeOf",
+            "columnName": "made_of",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "code",
+            "columnName": "code",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "tipRadius",
+            "columnName": "tip_radius",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tipAngle",
+            "columnName": "tip_angle",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "size",
+            "columnName": "size",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "feed_and_speeds",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `insert_id` INTEGER NOT NULL, `material_id` INTEGER NOT NULL, `css_min` REAL NOT NULL, `css_max` REAL NOT NULL, `feed_min` REAL NOT NULL, `feed_max` REAL NOT NULL, `doc_min` REAL NOT NULL, `doc_max` REAL NOT NULL, FOREIGN KEY(`insert_id`) REFERENCES `cutting_insert`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`material_id`) REFERENCES `workpiece_material`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "insertId",
+            "columnName": "insert_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "materialId",
+            "columnName": "material_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cssMin",
+            "columnName": "css_min",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cssMax",
+            "columnName": "css_max",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "feedMin",
+            "columnName": "feed_min",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "feedMax",
+            "columnName": "feed_max",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "docMin",
+            "columnName": "doc_min",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "docMax",
+            "columnName": "doc_max",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "cutting_insert",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "insert_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "workpiece_material",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "material_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "lathe_tool",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `insert_id` INTEGER, `type` TEXT NOT NULL, `orientation` INTEGER NOT NULL, `spindle_direction` TEXT NOT NULL, `front_angle` REAL, `back_angle` REAL, `tool_diameter` REAL, `min_bore_diameter` REAL, `blade_width` REAL, `max_z_depth` REAL, `max_x_depth` REAL, `min_thread_pitch` REAL, `max_thread_pitch` REAL, FOREIGN KEY(`insert_id`) REFERENCES `cutting_insert`(`id`) ON UPDATE NO ACTION ON DELETE SET NULL )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "insertId",
+            "columnName": "insert_id",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tipOrientation",
+            "columnName": "orientation",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "spindleDirection",
+            "columnName": "spindle_direction",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "frontAngle",
+            "columnName": "front_angle",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "backAngle",
+            "columnName": "back_angle",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "toolDiameter",
+            "columnName": "tool_diameter",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "minBoreDiameter",
+            "columnName": "min_bore_diameter",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "bladeWidth",
+            "columnName": "blade_width",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "maxZDepth",
+            "columnName": "max_z_depth",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "maxXDepth",
+            "columnName": "max_x_depth",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "minThreadPitch",
+            "columnName": "min_thread_pitch",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "maxThreadPitch",
+            "columnName": "max_thread_pitch",
+            "affinity": "REAL"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "cutting_insert",
+            "onDelete": "SET NULL",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "insert_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "tool_holder",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `holder_number` INTEGER NOT NULL, `holder_type` TEXT NOT NULL, `clamping_position` INTEGER NOT NULL, `x_offset` REAL, `z_offset` REAL, `lathe_cutter_id` INTEGER, FOREIGN KEY(`lathe_cutter_id`) REFERENCES `lathe_tool`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "holderNumber",
+            "columnName": "holder_number",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "holderType",
+            "columnName": "holder_type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "clampingPosition",
+            "columnName": "clamping_position",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "xOffset",
+            "columnName": "x_offset",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "zOffset",
+            "columnName": "z_offset",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "cutterId",
+            "columnName": "lathe_cutter_id",
+            "affinity": "INTEGER"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "foreignKeys": [
+          {
+            "table": "lathe_tool",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "lathe_cutter_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "workpiece_material",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `category` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "category",
+            "columnName": "category",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd425b47475b017839da1f3626b49b9f7')"
+    ]
+  }
+}
