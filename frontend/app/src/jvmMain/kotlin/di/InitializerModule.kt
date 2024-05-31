@@ -1,6 +1,5 @@
 package di
 
-import Files
 import com.mindovercnc.linuxcnc.initializer.KtlCncInitializer
 import initializer.Initializer
 import initializer.SimpleInitializer
@@ -22,6 +21,6 @@ val InitializerModule = DI.Module("initializer") {
 
     bindSingleton { AppDirInitializer(instance()) }
 
-    bindSingleton { KtlCncInitializer(Files.appDir.toFile()) }
+    bindSingleton { KtlCncInitializer(instance("app_dir")) }
     bindSingleton { StatusWatchInitializer(instance(), instance()) }
 }

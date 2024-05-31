@@ -2,15 +2,15 @@ package com.mindovercnc.linuxcnc.initializer
 
 import initializer.InitializerStep
 import mu.KotlinLogging
-import java.io.File
+import okio.Path
 
 class LoadSoResourceStep(
-    private val destFolder: File,
+    private val destFolder: Path,
     private val libName: String
 ) : InitializerStep {
     override suspend fun initialise() {
         // Check if the .so file already exists in destination folder.
-        val libDestinationFile = File(destFolder, libName)
+        val libDestinationFile = destFolder.div(libName).toFile()
         if (!libDestinationFile.exists()) {
             LOG.info("Copy $libName to $destFolder")
 

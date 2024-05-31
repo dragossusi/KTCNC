@@ -1,11 +1,12 @@
 package com.mindovercnc.linuxcnc.initializer
 
 import initializer.InitializerStep
-import kotlinx.coroutines.runBlocking
 import mu.KotlinLogging
-import java.io.File
+import okio.Path
 
-class KtlCncInitializer(private val destFolder: File) : InitializerStep {
+class KtlCncInitializer(
+    private val destFolder: Path
+) : InitializerStep {
 
     /** Extract .so file into the destination folder */
     override suspend fun initialise() {

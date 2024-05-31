@@ -2,13 +2,15 @@ package com.mindovercnc.database.di
 
 import androidx.room.Room
 import com.mindovercnc.database.KtcncDatabase
-import java.io.File
+import okio.Path
 import org.kodein.di.DI
 import org.kodein.di.bindSingleton
+import org.kodein.di.instance
 
 actual fun DI.Builder.bindDatabaseBuilder() {
     bindSingleton {
-        val dbFile = File(DB_NAME)
+        val appDir: Path = instance("app_dir")
+        val dbFile = appDir.div(DB_NAME).toFile()
         Room.databaseBuilder<KtcncDatabase>(
             name = dbFile.absolutePath,
         )

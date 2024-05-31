@@ -54,8 +54,13 @@ object Libs {
     }
 
     object Exposed {
+        @Deprecated("Use room instead")
         const val core = "org.jetbrains.exposed:exposed-core:${Versions.exposed}"
+
+        @Deprecated("Use room instead")
         const val dao = "org.jetbrains.exposed:exposed-dao:${Versions.exposed}"
+
+        @Deprecated("Use room instead")
         const val jdbc = "org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}"
     }
 

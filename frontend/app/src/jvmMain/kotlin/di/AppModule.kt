@@ -2,6 +2,7 @@ package di
 
 import AppConfig
 import Communication
+import Files
 import StatusWatcher
 import androidx.compose.runtime.Composable
 import com.mindovercnc.data.lathehal.local.di.LatheHalLocalDataModule
@@ -21,6 +22,7 @@ import com.mindovercnc.linuxcnc.tools.remote.di.ToolsRemoteModule
 import kotlinx.datetime.Clock
 import okio.FileSystem
 import org.kodein.di.DI
+import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
 import org.kodein.di.compose.withDI
 import org.kodein.di.instance
@@ -84,6 +86,8 @@ fun appDi(appConfig: AppConfig) = DI.Module("app") {
         dataModule,
         ParseFactoryModule,
     )
+
+    bindProvider(tag = "app_dir") { Files.appDir }
 }
 
 @Composable

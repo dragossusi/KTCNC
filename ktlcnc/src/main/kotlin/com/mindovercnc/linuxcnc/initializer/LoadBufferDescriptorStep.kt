@@ -2,15 +2,15 @@ package com.mindovercnc.linuxcnc.initializer
 
 import initializer.InitializerStep
 import mu.KotlinLogging
-import java.io.File
+import okio.Path
 
 class LoadBufferDescriptorStep(
-    private val destFolder: File,
+    private val destFolder: Path,
     private val fileName: String
 ) : InitializerStep {
     override suspend fun initialise() {
         // Check if the .json file already exists in destination folder.
-        val jsonDestinationFile = File(destFolder, fileName)
+        val jsonDestinationFile = destFolder.div(fileName).toFile()
         if (!jsonDestinationFile.exists()) {
             LOG.info("Copy $fileName to $destFolder")
             val resourceStream = KtlCncInitializer::class.java.classLoader.getResourceAsStream(fileName)
