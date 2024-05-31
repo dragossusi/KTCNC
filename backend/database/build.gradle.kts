@@ -1,5 +1,3 @@
-import Versions.sqliteJdbc
-
 plugins {
     kotlin("multiplatform")
     id("com.google.devtools.ksp")
@@ -24,7 +22,6 @@ kotlin {
 
                 implementation(Libs.okio)
 
-                implementation("org.xerial:sqlite-jdbc:$sqliteJdbc")
                 implementation(Libs.Room.runtime)
                 implementation(Libs.Sqlite.bundled)
 

@@ -3,8 +3,13 @@ object Versions {
     const val ksp = "2.0.0-1.0.21"
     const val compose = "1.6.10"
     const val kodein = "7.21.1"
+
+    @Deprecated("use room instead")
     const val exposed = "0.46.0"
+
+    @Deprecated("use room instead")
     const val sqliteJdbc = "3.41.2.1"
+
     const val okio = "3.7.0"
     const val wire = "4.9.9"
     const val roborazzi = "1.9.0"
