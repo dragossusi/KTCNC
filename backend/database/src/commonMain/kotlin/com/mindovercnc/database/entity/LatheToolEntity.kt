@@ -18,7 +18,7 @@ import com.mindovercnc.model.SpindleDirection
         )
     ]
 )
-class LatheToolEntity(
+data class LatheToolEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo("insert_id") val insertId: Int? = null,
     @ColumnInfo("type") val type: ToolType,

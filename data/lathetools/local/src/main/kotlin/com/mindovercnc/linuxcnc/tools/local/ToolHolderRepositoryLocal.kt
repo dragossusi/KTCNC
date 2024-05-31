@@ -4,17 +4,11 @@ import com.mindovercnc.database.dao.CuttingInsertDao
 import com.mindovercnc.database.dao.ToolHolderDao
 import com.mindovercnc.database.entity.LatheToolEntity
 import com.mindovercnc.database.entity.ToolHolderEntity
-import com.mindovercnc.database.table.ToolHolderTable
-import com.mindovercnc.database.table.ToolHolderTable.holderNumber
 import com.mindovercnc.linuxcnc.tools.ToolHolderRepository
 import com.mindovercnc.linuxcnc.tools.model.LatheTool
 import com.mindovercnc.linuxcnc.tools.model.ToolHolder
 import com.mindovercnc.linuxcnc.tools.model.ToolType
 import com.mindovercnc.model.TipOrientation
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 
 /** Implementation for [ToolHolderRepository]. */
 class ToolHolderRepositoryLocal(
@@ -126,19 +120,19 @@ class ToolHolderRepositoryLocal(
     }
 
     override suspend fun updateToolHolder(toolHolder: ToolHolder) {
-        transaction {
-            ToolHolderTable.update({ holderNumber eq toolHolder.holderNumber }) {
-                it[holderType] = toolHolder.type
-                it[cutterId] = toolHolder.latheTool?.toolId
-                it[clampingPosition] = toolHolder.clampingPosition
-                // offsets in a separate call
-            }
-        }
+        val entity = ToolHolderEntity(
+            holderNumber = toolHolder.holderNumber,
+            holderType = toolHolder.type,
+            cutterId = toolHolder.latheTool?.toolId,
+            clampingPosition = toolHolder.clampingPosition,
+            // TODO offsets in a separate call
+            xOffset = toolHolder.xOffset,
+            zOffset = toolHolder.zOffset
+        )
+        toolHolderDao.update(entity)
     }
 
     override suspend fun deleteToolHolder(toolHolder: ToolHolder): Boolean {
-        return transaction {
-            ToolHolderTable.deleteWhere { holderNumber eq toolHolder.holderNumber } != 0
-        }
+        return toolHolderDao.deleteByNumber(toolHolder.holderNumber) != 0
     }
 }

@@ -3,15 +3,10 @@ package com.mindovercnc.linuxcnc.tools.local
 import com.mindovercnc.database.dao.CuttingInsertDao
 import com.mindovercnc.database.dao.LatheToolDao
 import com.mindovercnc.database.entity.LatheToolEntity
-import com.mindovercnc.database.table.LatheToolTable
 import com.mindovercnc.linuxcnc.tools.LatheToolRepository
 import com.mindovercnc.linuxcnc.tools.model.LatheTool
 import com.mindovercnc.linuxcnc.tools.model.ToolType
 import com.mindovercnc.model.TipOrientation
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.update
 
 /** Implementation for [LatheToolRepository]. */
 class LatheToolRepositoryLocal(
@@ -24,16 +19,7 @@ class LatheToolRepositoryLocal(
     }
 
     override suspend fun getUnmountedLatheTools(): List<LatheTool> {
-        TODO()
-//        return transaction {
-//            val toolHolderQuery =
-//                ToolHolderTable.slice(ToolHolderTable.cutterId)
-//                    .select(ToolHolderTable.cutterId.isNotNull())
-//
-//            val query = LatheToolTable.select(LatheToolTable.id notInSubQuery toolHolderQuery)
-//
-//            LatheToolEntity.wrapRows(query).mapNotNull { it.toLatheTool() }
-//        }
+        return latheToolDao.getUnmountedTools().mapNotNull { it.toLatheTool() }
     }
 
     override suspend fun createLatheTool(latheTool: LatheTool) {
@@ -46,11 +32,78 @@ class LatheToolRepositoryLocal(
                         tipOrientation = latheTool.tipOrientation.orient,
                         spindleDirection = latheTool.spindleDirection,
                     )
-
                 is LatheTool.Boring ->
                     LatheToolEntity(
                         insertId = latheTool.insert.id!!,
                         type = ToolType.Boring,
+                        tipOrientation = latheTool.tipOrientation.orient,
+                        spindleDirection = latheTool.spindleDirection,
+                        minBoreDiameter = latheTool.minBoreDiameter,
+                        maxZDepth = latheTool.maxZDepth,
+                    )
+                is LatheTool.Drilling ->
+                    LatheToolEntity(
+                        type = ToolType.Drilling,
+                        tipOrientation = latheTool.tipOrientation.orient,
+                        spindleDirection = latheTool.spindleDirection,
+                        toolDiameter = latheTool.toolDiameter,
+                        maxZDepth = latheTool.maxZDepth,
+                    )
+                is LatheTool.Reaming ->
+                    LatheToolEntity(
+                        type = ToolType.Reaming,
+                        tipOrientation = latheTool.tipOrientation.orient,
+                        spindleDirection = latheTool.spindleDirection,
+                        toolDiameter = latheTool.toolDiameter,
+                        maxZDepth = latheTool.maxZDepth,
+                    )
+                is LatheTool.Parting ->
+                    LatheToolEntity(
+                        type = ToolType.Parting,
+                        insertId = latheTool.insert.id!!,
+                        tipOrientation = latheTool.tipOrientation.orient,
+                        spindleDirection = latheTool.spindleDirection,
+                        bladeWidth = latheTool.bladeWidth,
+                        maxXDepth = latheTool.maxXDepth,
+                    )
+                is LatheTool.Grooving ->
+                    LatheToolEntity(
+                        type = ToolType.Grooving,
+                        insertId = latheTool.insert.id!!,
+                        tipOrientation = latheTool.tipOrientation.orient,
+                        spindleDirection = latheTool.spindleDirection,
+                        bladeWidth = latheTool.bladeWidth,
+                        maxXDepth = latheTool.maxXDepth,
+                    )
+                is LatheTool.Slotting ->
+                    LatheToolEntity(
+                        type = ToolType.Slotting,
+                        tipOrientation = latheTool.tipOrientation.orient,
+                        spindleDirection = latheTool.spindleDirection,
+                        bladeWidth = latheTool.bladeWidth,
+                        maxZDepth = latheTool.maxZDepth,
+                    )
+                else -> return
+            }
+        latheToolDao.insert(entity)
+    }
+
+    override suspend fun updateLatheTool(latheTool: LatheTool) {
+        val id = latheTool.toolId ?: return
+        val entity: LatheToolEntity =
+            when (latheTool) {
+                is LatheTool.Turning ->
+                    LatheToolEntity(
+                        type = ToolType.Turning,
+                        insertId = latheTool.insert.id!!,
+                        tipOrientation = latheTool.tipOrientation.orient,
+                        spindleDirection = latheTool.spindleDirection,
+                    )
+
+                is LatheTool.Boring ->
+                    LatheToolEntity(
+                        type = ToolType.Boring,
+                        insertId = latheTool.insert.id!!,
                         tipOrientation = latheTool.tipOrientation.orient,
                         spindleDirection = latheTool.spindleDirection,
                         minBoreDiameter = latheTool.minBoreDiameter,
@@ -68,7 +121,7 @@ class LatheToolRepositoryLocal(
 
                 is LatheTool.Reaming ->
                     LatheToolEntity(
-                        type = ToolType.Reaming,
+                        type = ToolType.Drilling,
                         tipOrientation = latheTool.tipOrientation.orient,
                         spindleDirection = latheTool.spindleDirection,
                         toolDiameter = latheTool.toolDiameter,
@@ -97,7 +150,7 @@ class LatheToolRepositoryLocal(
 
                 is LatheTool.Slotting ->
                     LatheToolEntity(
-                        type = ToolType.Slotting,
+                        type = ToolType.Grooving,
                         tipOrientation = latheTool.tipOrientation.orient,
                         spindleDirection = latheTool.spindleDirection,
                         bladeWidth = latheTool.bladeWidth,
@@ -106,74 +159,13 @@ class LatheToolRepositoryLocal(
 
                 else -> return
             }
-        latheToolDao.insert(entity)
-    }
 
-    override suspend fun updateLatheTool(latheTool: LatheTool) {
-        transaction {
-            LatheToolTable.update({ LatheToolTable.id eq latheTool.toolId }) {
-                when (latheTool) {
-                    is LatheTool.Turning -> {
-                        it[type] = ToolType.Turning
-                        it[insertId] = latheTool.insert.id!!
-                        it[tipOrientation] = latheTool.tipOrientation.orient
-                        it[spindleDirection] = latheTool.spindleDirection
-                    }
-                    is LatheTool.Boring -> {
-                        it[type] = ToolType.Boring
-                        it[insertId] = latheTool.insert.id!!
-                        it[tipOrientation] = latheTool.tipOrientation.orient
-                        it[spindleDirection] = latheTool.spindleDirection
-                        it[minBoreDiameter] = latheTool.minBoreDiameter
-                        it[maxZDepth] = latheTool.maxZDepth
-                    }
-                    is LatheTool.Drilling -> {
-                        it[type] = ToolType.Drilling
-                        it[tipOrientation] = latheTool.tipOrientation.orient
-                        it[spindleDirection] = latheTool.spindleDirection
-                        it[toolDiameter] = latheTool.toolDiameter
-                        it[maxZDepth] = latheTool.maxZDepth
-                    }
-                    is LatheTool.Reaming -> {
-                        it[type] = ToolType.Drilling
-                        it[tipOrientation] = latheTool.tipOrientation.orient
-                        it[spindleDirection] = latheTool.spindleDirection
-                        it[toolDiameter] = latheTool.toolDiameter
-                        it[maxZDepth] = latheTool.maxZDepth
-                    }
-                    is LatheTool.Parting -> {
-                        it[type] = ToolType.Parting
-                        it[insertId] = latheTool.insert.id!!
-                        it[tipOrientation] = latheTool.tipOrientation.orient
-                        it[spindleDirection] = latheTool.spindleDirection
-                        it[bladeWidth] = latheTool.bladeWidth
-                        it[maxXDepth] = latheTool.maxXDepth
-                    }
-                    is LatheTool.Grooving -> {
-                        it[type] = ToolType.Grooving
-                        it[insertId] = latheTool.insert.id!!
-                        it[tipOrientation] = latheTool.tipOrientation.orient
-                        it[spindleDirection] = latheTool.spindleDirection
-                        it[bladeWidth] = latheTool.bladeWidth
-                        it[maxXDepth] = latheTool.maxXDepth
-                    }
-                    is LatheTool.Slotting -> {
-                        it[type] = ToolType.Grooving
-                        it[tipOrientation] = latheTool.tipOrientation.orient
-                        it[spindleDirection] = latheTool.spindleDirection
-                        it[bladeWidth] = latheTool.bladeWidth
-                        it[maxZDepth] = latheTool.maxZDepth
-                    }
-                    else -> Unit
-                }
-            }
-        }
+        latheToolDao.upsert(entity.copy(id = id))
     }
 
     override suspend fun deleteLatheTool(latheTool: LatheTool): Boolean {
-        return transaction {
-            LatheToolTable.deleteWhere { LatheToolTable.id eq latheTool.toolId } != 0
-        }
+        val id = latheTool.toolId ?: return false
+        return latheToolDao.deleteById(id) != 0
     }
 
     private suspend fun LatheToolEntity.toLatheTool(): LatheTool? {
@@ -188,7 +180,6 @@ class LatheToolRepositoryLocal(
                     backAngle = backAngle!!,
                     spindleDirection = spindleDirection,
                 )
-
             ToolType.Boring ->
                 LatheTool.Boring(
                     toolId = id,
@@ -200,7 +191,6 @@ class LatheToolRepositoryLocal(
                     minBoreDiameter = minBoreDiameter ?: 0.0,
                     maxZDepth = maxZDepth ?: 0.0
                 )
-
             ToolType.Drilling ->
                 LatheTool.Drilling(
                     toolId = id,
@@ -208,7 +198,6 @@ class LatheToolRepositoryLocal(
                     toolDiameter = toolDiameter!!,
                     maxZDepth = maxZDepth ?: 0.0
                 )
-
             ToolType.Reaming ->
                 LatheTool.Reaming(
                     toolId = id,
@@ -216,7 +205,6 @@ class LatheToolRepositoryLocal(
                     toolDiameter = toolDiameter!!,
                     maxZDepth = maxZDepth ?: 0.0
                 )
-
             ToolType.Parting ->
                 LatheTool.Parting(
                     toolId = id,
@@ -224,7 +212,6 @@ class LatheToolRepositoryLocal(
                     bladeWidth = bladeWidth!!,
                     maxXDepth = maxXDepth ?: 0.0
                 )
-
             ToolType.Grooving ->
                 LatheTool.Grooving(
                     toolId = id,
@@ -234,7 +221,6 @@ class LatheToolRepositoryLocal(
                     bladeWidth = bladeWidth!!,
                     maxXDepth = maxXDepth ?: 0.0
                 )
-
             ToolType.OdThreading ->
                 LatheTool.OdThreading(
                     toolId = id,
@@ -242,7 +228,6 @@ class LatheToolRepositoryLocal(
                     minPitch = minThreadPitch ?: 0.0,
                     maxPitch = maxThreadPitch ?: 0.0
                 )
-
             ToolType.IdThreading ->
                 LatheTool.IdThreading(
                     toolId = id,
@@ -250,7 +235,6 @@ class LatheToolRepositoryLocal(
                     minPitch = minThreadPitch ?: 0.0,
                     maxPitch = maxThreadPitch ?: 0.0
                 )
-
             ToolType.Slotting ->
                 LatheTool.Slotting(
                     toolId = id,

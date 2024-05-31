@@ -18,8 +18,7 @@ import com.mindovercnc.linuxcnc.tools.model.ToolHolderType
         ]
 )
 data class ToolHolderEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @ColumnInfo("holder_number") val holderNumber: Int,
+    @PrimaryKey @ColumnInfo("holder_number") val holderNumber: Int,
     @ColumnInfo("holder_type") val holderType: ToolHolderType,
     @ColumnInfo("clamping_position") val clampingPosition: Int,
     @ColumnInfo("x_offset") val xOffset: Double?,

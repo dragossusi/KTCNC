@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d425b47475b017839da1f3626b49b9f7",
+    "identityHash": "11a89c9586f98b3d489afc7b1ba3f934",
     "entities": [
       {
         "tableName": "cutting_insert",
@@ -242,14 +242,8 @@
       },
       {
         "tableName": "tool_holder",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `holder_number` INTEGER NOT NULL, `holder_type` TEXT NOT NULL, `clamping_position` INTEGER NOT NULL, `x_offset` REAL, `z_offset` REAL, `lathe_cutter_id` INTEGER, FOREIGN KEY(`lathe_cutter_id`) REFERENCES `lathe_tool`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`holder_number` INTEGER NOT NULL, `holder_type` TEXT NOT NULL, `clamping_position` INTEGER NOT NULL, `x_offset` REAL, `z_offset` REAL, `lathe_cutter_id` INTEGER, PRIMARY KEY(`holder_number`), FOREIGN KEY(`lathe_cutter_id`) REFERENCES `lathe_tool`(`id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "holderNumber",
             "columnName": "holder_number",
@@ -285,9 +279,9 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "id"
+            "holder_number"
           ]
         },
         "foreignKeys": [
@@ -337,7 +331,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd425b47475b017839da1f3626b49b9f7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '11a89c9586f98b3d489afc7b1ba3f934')"
     ]
   }
 }
