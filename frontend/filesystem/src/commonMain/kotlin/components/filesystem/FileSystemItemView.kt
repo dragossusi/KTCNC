@@ -18,7 +18,6 @@ import org.jetbrains.compose.resources.painterResource
 expect fun FileSystemItemView(item: FileSystemItemData, modifier: Modifier = Modifier)
 
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 internal fun FileImage(item: FileSystemItemData) {
     val resourcePath = remember(item.isDirectory) {

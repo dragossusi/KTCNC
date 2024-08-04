@@ -8,4 +8,5 @@ interface ProgramPickerComponent : AppScreenComponent<ProgramPickerState> {
     fun clearError()
     fun selectItem(item: Path)
     fun loadFolderContents(file: Path)
+    fun setCurrentFile(file: Path?)
 }

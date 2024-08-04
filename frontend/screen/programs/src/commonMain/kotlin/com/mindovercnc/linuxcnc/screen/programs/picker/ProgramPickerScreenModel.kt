@@ -73,7 +73,7 @@ class ProgramPickerScreenModel(di: DI, componentContext: ComponentContext) :
         }
     }
 
-    private fun setCurrentFile(file: Path?) {
+    override fun setCurrentFile(file: Path?) {
         logger.info { "Setting current file to $file" }
         mutableState.update {
             it.copy(editorState = file?.let(::createEditorState))

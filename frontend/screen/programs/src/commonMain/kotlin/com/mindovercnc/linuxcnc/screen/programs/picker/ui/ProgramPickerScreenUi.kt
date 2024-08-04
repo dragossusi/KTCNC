@@ -14,7 +14,7 @@ fun ProgramPickerScreenUi(component: ProgramPickerComponent, modifier: Modifier 
     val state by component.state.collectAsState()
 
     Box(modifier = modifier) {
-        ProgramsScreenUi(state)
+        ProgramsScreenUi(state, onPathDropped = component::setCurrentFile)
         ErrorSnackbar(
             state.error,
             onDismiss = component::clearError,

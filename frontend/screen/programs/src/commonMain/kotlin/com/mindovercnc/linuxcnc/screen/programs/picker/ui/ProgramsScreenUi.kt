@@ -11,9 +11,14 @@ import components.breadcrumb.BreadcrumbView
 import components.filesystem.FileSystemView
 import editor.EditorEmptyView
 import editor.EditorView
+import okio.Path
 
 @Composable
-fun ProgramsScreenUi(state: ProgramPickerState, modifier: Modifier = Modifier) {
+fun ProgramsScreenUi(
+    state: ProgramPickerState,
+    onPathDropped: (Path) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier) {
         BreadcrumbView(
             data = state.breadCrumbData,
@@ -33,12 +38,17 @@ fun ProgramsScreenUi(state: ProgramPickerState, modifier: Modifier = Modifier) {
             VerticalDivider()
 
             // editor
+            val editorModifier = itemModifier.programFileDropTarget { path ->
+                onPathDropped(path)
+            }
             if (state.editorState != null) {
-                EditorView(state.editorState, modifier = itemModifier)
+                EditorView(state.editorState, modifier = editorModifier)
             } else {
-                EditorEmptyView(modifier = itemModifier)
+                EditorEmptyView(modifier = editorModifier)
             }
         }
     }
 }
+
+internal expect fun Modifier.programFileDropTarget(onFileDropped: (Path) -> Unit): Modifier
 

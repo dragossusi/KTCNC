@@ -4,6 +4,7 @@ import androidx.compose.runtime.Stable
 import components.breadcrumb.BreadCrumbData
 import components.filesystem.FileSystemData
 import editor.EditorState
+import okio.Path
 
 @Stable
 data class ProgramPickerState(
