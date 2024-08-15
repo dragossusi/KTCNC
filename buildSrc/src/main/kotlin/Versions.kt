@@ -4,12 +4,6 @@ object Versions {
     const val compose = "1.7.0-alpha02"
     const val kodein = "7.21.1"
 
-    @Deprecated("use room instead")
-    const val exposed = "0.46.0"
-
-    @Deprecated("use room instead")
-    const val sqliteJdbc = "3.41.2.1"
-
     const val okio = "3.9.0"
     const val wire = "5.0.0"
     const val roborazzi = "1.9.0"

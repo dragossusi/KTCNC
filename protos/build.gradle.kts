@@ -20,7 +20,7 @@ kotlin {
 
 wire {
     sourcePath {
-        srcDir("src/main")
+        srcDir(File("src/main"))
     }
     kotlin {
         javaInterop = true

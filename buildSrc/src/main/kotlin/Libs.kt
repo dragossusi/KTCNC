@@ -53,17 +53,6 @@ object Libs {
         const val core = "org.kodein.di:kodein-di:${Versions.kodein}"
     }
 
-    object Exposed {
-        @Deprecated("Use room instead")
-        const val core = "org.jetbrains.exposed:exposed-core:${Versions.exposed}"
-
-        @Deprecated("Use room instead")
-        const val dao = "org.jetbrains.exposed:exposed-dao:${Versions.exposed}"
-
-        @Deprecated("Use room instead")
-        const val jdbc = "org.jetbrains.exposed:exposed-jdbc:${Versions.exposed}"
-    }
-
     object Room {
         const val compiler = "androidx.room:room-compiler:${Versions.room}"
         const val runtime = "androidx.room:room-runtime:${Versions.room}"
