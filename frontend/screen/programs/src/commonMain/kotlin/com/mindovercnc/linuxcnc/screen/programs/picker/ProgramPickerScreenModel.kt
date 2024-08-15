@@ -21,7 +21,6 @@ class ProgramPickerScreenModel(private val di: DI, componentContext: ComponentCo
 
     private val fileSystemRepository: FileSystemRepository by di.instance()
     private val fileSystem: FileSystem by di.instance()
-    private val editorLoader: EditorLoaderImpl by di.instance()
     private val fileSystemDataUseCase: FileSystemDataUseCase by di.instance()
     private val breadCrumbDataUseCase: BreadCrumbDataUseCase by di.instance()
 

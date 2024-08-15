@@ -14,14 +14,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mindovercnc.linuxcnc.numpad.data.InputType
+import com.mindovercnc.linuxcnc.screen.manual.icons.ManualIcons
+import com.mindovercnc.linuxcnc.screen.manual.icons.odTurnDetails
 import com.mindovercnc.linuxcnc.screen.manual.simplecycles.SimpleCyclesComponent
 import com.mindovercnc.model.SimpleCycleParameters
-import ktcnc.frontend.screen.manual.generated.resources.Res
-import ktcnc.frontend.screen.manual.generated.resources.od_turn_details
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun TurningParametersView(
     viewModel: SimpleCyclesComponent,
@@ -46,7 +43,8 @@ fun TurningParametersView(
                         shape = RoundedCornerShape(6.dp),
                     ),
                 contentDescription = null,
-                painter = painterResource(Res.drawable.od_turn_details)
+                imageVector = ManualIcons.odTurnDetails(),
+//                painter = painterResource(Res.drawable.od_turn_details)
             )
         }
         Spacer(modifier = Modifier.width(1.dp).fillMaxHeight().background(Color.LightGray))
