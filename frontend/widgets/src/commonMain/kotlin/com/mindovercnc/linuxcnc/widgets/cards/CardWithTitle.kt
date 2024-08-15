@@ -73,7 +73,7 @@ private fun CardWithTitleContent(
             style = MaterialTheme.typography.titleMedium,
             text = cardTitle
         )
-        Divider(color = LocalContentColor.current, thickness = 1.dp)
+        HorizontalDivider(thickness = 1.dp, color = LocalContentColor.current)
         Box(modifier = Modifier.padding(contentSpacing)) { content.invoke() }
     }
 }

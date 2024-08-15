@@ -98,7 +98,7 @@ private fun ExpandableCardWithTitleContent(
             modifier = Modifier.fillMaxWidth()
         )
         AnimatedVisibility(expanded) {
-            Divider(color = LocalContentColor.current, thickness = 1.dp)
+            HorizontalDivider(thickness = 1.dp, color = LocalContentColor.current)
             Column(verticalArrangement = Arrangement.spacedBy(contentSpacing)) { content.invoke() }
         }
     }

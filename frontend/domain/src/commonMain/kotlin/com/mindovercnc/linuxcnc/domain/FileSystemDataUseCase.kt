@@ -17,6 +17,7 @@ class FileSystemDataUseCase(
                     title = item.name,
                     isDirectory = item.isDirectory,
                     lastModified = item.lastModified,
+                    path = item.path,
                     onClick = { onItemClick(item.path) },
                     onCopy = { Clipboard.write(item.toString()) }
                 )

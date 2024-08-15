@@ -6,7 +6,8 @@ import com.mindovercnc.editor.impl.EditorLoaderImpl
 import com.mindovercnc.linuxcnc.domain.BreadCrumbDataUseCase
 import com.mindovercnc.linuxcnc.domain.FileSystemDataUseCase
 import com.mindovercnc.linuxcnc.screen.BaseScreenModel
-import editor.EditorState
+import com.mindovercnc.linuxcnc.screen.programs.preview.ProgramPreviewComponent
+import com.mindovercnc.linuxcnc.screen.programs.preview.ProgramPreviewScreenModel
 import kotlinx.coroutines.flow.update
 import mu.KotlinLogging
 import okio.FileSystem
@@ -14,7 +15,7 @@ import okio.Path
 import org.kodein.di.DI
 import org.kodein.di.instance
 
-class ProgramPickerScreenModel(di: DI, componentContext: ComponentContext) :
+class ProgramPickerScreenModel(private val di: DI, componentContext: ComponentContext) :
     BaseScreenModel<ProgramPickerState>(ProgramPickerState(), componentContext),
     ProgramPickerComponent {
 
@@ -76,12 +77,11 @@ class ProgramPickerScreenModel(di: DI, componentContext: ComponentContext) :
     override fun setCurrentFile(file: Path?) {
         logger.info { "Setting current file to $file" }
         mutableState.update {
-            it.copy(editorState = file?.let(::createEditorState))
+            it.copy(preview = file?.let(::createPreviewComponent))
         }
     }
 
-    private fun createEditorState(path: Path): EditorState {
-        val editor = editorLoader.loadEditor(path)
-        return EditorState(editor)
+    private fun createPreviewComponent(path: Path): ProgramPreviewComponent {
+        return ProgramPreviewScreenModel(path, di)
     }
 }

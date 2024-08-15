@@ -1,6 +1,6 @@
 object Versions {
-    const val kotlin = "2.0.0"
-    const val ksp = "2.0.0-1.0.21"
+    const val kotlin = "2.0.10"
+    const val ksp = "2.0.10-1.0.24"
     const val compose = "1.7.0-alpha02"
     const val kodein = "7.21.1"
 
@@ -10,16 +10,16 @@ object Versions {
     @Deprecated("use room instead")
     const val sqliteJdbc = "3.41.2.1"
 
-    const val okio = "3.7.0"
+    const val okio = "3.9.0"
     const val wire = "5.0.0"
     const val roborazzi = "1.9.0"
 
-    const val room = "2.7.0-alpha02"
-    const val sqlite = "2.5.0-alpha02"
+    const val room = "2.7.0-alpha06"
+    const val sqlite = "2.5.0-alpha06"
 
     const val bignum = "0.3.8"
     const val mockk = "1.13.7"
-    const val decompose = "3.2.0-alpha02"
+    const val decompose = "3.2.0-alpha04"
 
     object Kotlinx {
         const val datetime = "0.6.0-RC"
@@ -42,12 +42,12 @@ object Versions {
         const val grpc = "1.53.0"
 
         object Wire {
-            const val plugin = "4.9.1"
+            const val plugin = "5.0.0"
         }
     }
 
     object Android {
-        const val plugin = "8.1.0"
+        const val plugin = "8.2.0"
     }
 
     const val app = "1.0"

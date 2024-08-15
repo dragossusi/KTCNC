@@ -1,7 +1,7 @@
 package com.mindovercnc.linuxcnc.screen.programs.picker.ui
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -20,13 +20,13 @@ fun ProgramPickerFab(
 ) {
     val state by component.state.collectAsState()
 
-    state.editorState?.let { editorState ->
+    state.preview?.let { preview ->
         ExtendedFloatingActionButton(
             text = { Text("Load Program") },
-            onClick = { rootComponent.openProgram(editorState.editor.file) },
+            onClick = { rootComponent.openProgram(preview.path) },
             icon = {
                 Icon(
-                    Icons.Default.ExitToApp,
+                    Icons.AutoMirrored.Filled.ExitToApp,
                     contentDescription = null,
                 )
             },

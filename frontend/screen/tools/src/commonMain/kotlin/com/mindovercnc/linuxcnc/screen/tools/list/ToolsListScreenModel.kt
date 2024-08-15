@@ -20,7 +20,7 @@ import com.mindovercnc.linuxcnc.screen.tools.list.tabs.toolholder.HoldersToolsCo
 import com.mindovercnc.linuxcnc.screen.tools.list.tabs.toolholder.HoldersToolsScreenModel
 import org.kodein.di.DI
 
-class ToolsListScreenModel(private val di: DI, private val componentContext: ComponentContext) :
+class ToolsListScreenModel(private val di: DI, componentContext: ComponentContext) :
     BaseScreenModel<ToolsState>(ToolsState(), componentContext),
     ToolsListComponent,
     ComponentContext by componentContext {

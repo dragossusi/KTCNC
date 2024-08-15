@@ -21,7 +21,8 @@ import androidx.compose.ui.unit.sp
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toJavaInstant
 import okio.Path
-import java.awt.datatransfer.StringSelection
+import java.awt.datatransfer.DataFlavor
+import java.awt.datatransfer.Transferable
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
@@ -33,7 +34,7 @@ actual fun FileSystemItemView(item: FileSystemItemData, modifier: Modifier) {
         }
     ) {
         ListItem(
-            modifier = modifier.clickable(onClick = item.onClick).fileDragSource(),
+            modifier = modifier.clickable(onClick = item.onClick).fileDragSource(item.path),
             colors = ListItemDefaults.colors(containerColor = colorFor(item)),
             headlineContent = {
                 Text(
@@ -66,16 +67,47 @@ internal fun millisToLastModified(instant: Instant): String {
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class)
 private fun Modifier.fileDragSource(path: Path): Modifier = dragAndDropSource(
-    drawDragDecoration = {},
+    drawDragDecoration = {
+    },
 ) {
     detectDragGestures(
         onDragStart = { offset ->
             startTransfer(
                 DragAndDropTransferData(
                     DragAndDropTransferable(
-                        FileTransferable()
-                    )
+                        OkioPathTransferable(path)
+                    ),
+                    supportedActions = listOf(
+                        DragAndDropTransferAction.Copy,
+                        DragAndDropTransferAction.Move,
+                        DragAndDropTransferAction.Link,
+                    ),
+                    onTransferCompleted = { action ->
+                        when (action) {
+                            null -> println("Transfer aborted")
+                            DragAndDropTransferAction.Copy -> println("Copied")
+                            DragAndDropTransferAction.Move -> println("Moved")
+                            DragAndDropTransferAction.Link -> println("Linked")
+                        }
+                    },
+                    dragDecorationOffset = offset
+                )
+            )
         },
         onDrag = { _, _ -> },
     )
+}
+
+class OkioPathTransferable(private val path: Path) : Transferable {
+    override fun getTransferDataFlavors(): Array<DataFlavor> {
+        return arrayOf(DataFlavor.javaFileListFlavor)
+    }
+
+    override fun isDataFlavorSupported(p0: DataFlavor?): Boolean {
+        return p0?.isFlavorJavaFileListType == true
+    }
+
+    override fun getTransferData(p0: DataFlavor?): Any {
+        return listOf(path.toFile())
+    }
 }

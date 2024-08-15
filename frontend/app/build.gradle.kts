@@ -140,9 +140,7 @@ compose {
             }
         }
     }
-    experimental {
-        web.application {}
-    }
+    web {}
 }
 
 tasks.withType<KotlinCompile>().configureEach {
