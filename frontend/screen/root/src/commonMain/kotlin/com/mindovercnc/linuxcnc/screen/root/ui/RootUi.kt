@@ -46,8 +46,7 @@ fun RootUi(root: RootComponent, modifier: Modifier = Modifier) {
 
                         else -> null
                     }
-                }
-            )
+                })
         },
         floatingActionButton = { active.Fab(Modifier) },
     ) { padding ->
@@ -67,10 +66,8 @@ private fun NewTopAppBar(active: RootChild) {
         title = { active.Title(Modifier) },
         navigationIcon = { active.NavigationIcon(iconButtonModifier) },
         actions = { with(active) { Actions() } },
-        modifier = Modifier.shadow(3.dp)
-    )
+        modifier = Modifier.shadow(3.dp))
 }
-
 
 @Composable
 fun bottomBarColor(selected: Boolean, enabled: Boolean): Color {

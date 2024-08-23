@@ -4,5 +4,5 @@ import org.jetbrains.skia.Font
 import org.jetbrains.skia.Typeface
 
 object SkiKoFonts {
-    val default = Font(Typeface.makeDefault())
+    val default = Font(Typeface.makeEmpty())
 }

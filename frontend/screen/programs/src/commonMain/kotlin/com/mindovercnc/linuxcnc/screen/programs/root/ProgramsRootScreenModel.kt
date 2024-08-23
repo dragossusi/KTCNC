@@ -1,6 +1,7 @@
 package com.mindovercnc.linuxcnc.screen.programs.root
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.DelicateDecomposeApi
 import com.arkivanov.decompose.router.stack.*
 import com.arkivanov.decompose.value.Value
 import com.mindovercnc.linuxcnc.screen.PathSerializer
@@ -26,11 +27,11 @@ class ProgramsRootScreenModel(
             source = navigation,
             initialConfiguration = Config.Picker,
             childFactory = ::createChild,
-            serializer = Config.serializer()
-        )
+            serializer = Config.serializer())
 
     override val childStack: Value<ChildStack<*, ProgramsRootComponent.Child>> = _childStack
 
+    @OptIn(DelicateDecomposeApi::class)
     override fun openProgram(path: Path) {
         navigation.push(Config.Loaded(path))
     }

@@ -2,6 +2,7 @@ package com.mindovercnc.linuxcnc.screen.programs.picker.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -25,7 +26,7 @@ fun ProgramsScreenUi(
             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
             contentPadding = PaddingValues(horizontal = 8.dp)
         )
-        Divider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
+        HorizontalDivider(modifier = Modifier.fillMaxWidth(), thickness = 1.dp)
         Row {
             val itemModifier = Modifier.fillMaxSize()
                 .weight(1f)

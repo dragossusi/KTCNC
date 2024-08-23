@@ -8,6 +8,15 @@ object Libs {
 
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
 
+    object Adaptive {
+        val layout =
+            "org.jetbrains.compose.material3.adaptive:adaptive-layout:${Versions.material3adaptive}"
+        val navigation =
+            "org.jetbrains.compose.material3.adaptive:adaptive-navigation:${Versions.material3adaptive}"
+        val navigationSuite =
+            "org.jetbrains.compose.material3.adaptive:adaptive-navigation-suite:${Versions.material3adaptive}"
+    }
+
     object Decompose {
         const val core = "com.arkivanov.decompose:decompose:${Versions.decompose}"
         const val extensions = "com.arkivanov.decompose:extensions-compose:${Versions.decompose}"
