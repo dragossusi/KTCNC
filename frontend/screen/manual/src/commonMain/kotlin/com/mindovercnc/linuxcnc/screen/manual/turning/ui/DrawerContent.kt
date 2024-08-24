@@ -48,7 +48,6 @@ fun SimpleCyclesGrid(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun Cycle(op: SimpleCycle, modifier: Modifier = Modifier, onClick: () -> Unit) {
     Surface(

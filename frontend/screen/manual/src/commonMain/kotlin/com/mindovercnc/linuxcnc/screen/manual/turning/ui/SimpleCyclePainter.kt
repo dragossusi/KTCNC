@@ -10,7 +10,6 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 object SimpleCyclePainter {
-    @OptIn(ExperimentalResourceApi::class)
     fun from(simpleCycle: SimpleCycle): DrawableResource? = when (simpleCycle) {
         SimpleCycle.Turning -> Res.drawable.od_turn
         SimpleCycle.Boring -> Res.drawable.id_turn

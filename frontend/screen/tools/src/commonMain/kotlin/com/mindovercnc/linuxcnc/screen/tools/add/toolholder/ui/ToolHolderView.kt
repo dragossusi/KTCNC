@@ -23,7 +23,6 @@ import ktcnc.frontend.screen.tools.generated.resources.multifix_generic
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun ToolHolderView(
     type: ToolHolderType,

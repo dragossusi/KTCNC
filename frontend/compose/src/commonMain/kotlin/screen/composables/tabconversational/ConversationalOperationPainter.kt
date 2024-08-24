@@ -9,7 +9,6 @@ import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 object ConversationalOperationPainter {
-    @OptIn(ExperimentalResourceApi::class)
     fun from(operation: ConversationalOperation): DrawableResource? = when (operation) {
         ConversationalOperation.OdTurning -> Res.drawable.od
         ConversationalOperation.IdTurning -> Res.drawable.id

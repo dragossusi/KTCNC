@@ -9,7 +9,6 @@ import ktcnc.frontend.screen.tools.generated.resources.position3
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 object TipOrientationPainter {
-    @OptIn(ExperimentalResourceApi::class)
     fun from(tipOrientation: TipOrientation) = when (tipOrientation) {
         TipOrientation.Position1 -> Res.drawable.position1
         TipOrientation.Position2 -> Res.drawable.position2

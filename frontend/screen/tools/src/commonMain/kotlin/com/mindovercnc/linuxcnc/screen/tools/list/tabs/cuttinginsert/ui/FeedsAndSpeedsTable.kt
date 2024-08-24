@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.format.toFixedDigitsString
-import com.mindovercnc.linuxcnc.widgets.VerticalDivider
+import androidx.compose.material3.VerticalDivider
 import com.mindovercnc.model.FeedsAndSpeeds
 import scroll.VerticalScrollbar
 import scroll.draggableScroll

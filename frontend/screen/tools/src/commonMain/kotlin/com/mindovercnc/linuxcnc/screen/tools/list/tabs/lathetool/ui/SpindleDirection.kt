@@ -19,7 +19,6 @@ import ktcnc.frontend.screen.tools.generated.resources.Res
 import ktcnc.frontend.screen.tools.generated.resources.spindle_both
 import ktcnc.frontend.screen.tools.generated.resources.spindle_fwd
 import ktcnc.frontend.screen.tools.generated.resources.spindle_rev
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -39,14 +38,12 @@ fun SpindleDirection(
                 DirectionItem(
                     spindleDirection = item,
                     active = selectedDirection == item,
-                    modifier = itemModifier.onClick { onDirectionSelected(item) }
-                )
+                    modifier = itemModifier.onClick { onDirectionSelected(item) })
             }
         }
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun DirectionItem(
     spindleDirection: SpindleDirection,
@@ -81,7 +78,6 @@ fun DirectionItem(
             text = spindleDirection.shortName.uppercase(),
             style = MaterialTheme.typography.labelSmall,
             textAlign = TextAlign.Center,
-            color = selectedTint
-        )
+            color = selectedTint)
     }
 }

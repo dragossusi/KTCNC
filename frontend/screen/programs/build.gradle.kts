@@ -1,4 +1,3 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -33,8 +32,10 @@ kotlin {
                 //                implementation(compose.uiTooling)
                 implementation(compose.materialIconsExtended)
                 implementation(compose.material3)
-                @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+
+                implementation(Libs.Adaptive.layout)
+                implementation(Libs.Adaptive.navigation)
 
                 // internal modules
                 implementation(project(":frontend:clipboard"))

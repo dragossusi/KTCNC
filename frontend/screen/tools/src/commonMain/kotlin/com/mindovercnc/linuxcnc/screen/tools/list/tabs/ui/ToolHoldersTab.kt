@@ -25,7 +25,7 @@ import com.mindovercnc.linuxcnc.listitem.LabelWithValue
 import com.mindovercnc.linuxcnc.screen.tools.list.tabs.data.ToolHolderColumn
 import com.mindovercnc.linuxcnc.screen.tools.list.tabs.toolholder.HoldersToolsState
 import com.mindovercnc.linuxcnc.tools.model.ToolHolder
-import com.mindovercnc.linuxcnc.widgets.VerticalDivider
+import androidx.compose.material3.VerticalDivider
 import scroll.VerticalScrollbar
 import scroll.draggableScroll
 

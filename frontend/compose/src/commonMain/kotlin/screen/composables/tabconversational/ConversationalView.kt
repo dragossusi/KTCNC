@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.domain.ConversationalUseCase
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.kodein.di.compose.rememberInstance
 
@@ -28,14 +27,14 @@ fun ConversationalView(modifier: Modifier, onNewOpClicked: (ConversationalOperat
     Surface(modifier = modifier) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            ConversationalOperation.entries.forEach { Operation(it) { onNewOpClicked.invoke(it) } }
-        }
+            horizontalArrangement = Arrangement.SpaceEvenly) {
+                ConversationalOperation.entries.forEach {
+                    Operation(it) { onNewOpClicked.invoke(it) }
+                }
+            }
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun Operation(op: ConversationalOperation, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -43,50 +42,42 @@ fun Operation(op: ConversationalOperation, modifier: Modifier = Modifier, onClic
     val resource = remember(op) { ConversationalOperationPainter.from(op) }
     Surface(
         modifier =
-        modifier
-            .clip(shape)
-            .clickable(
-                interactionSource,
-                indication = LocalIndication.current,
-                onClick = onClick
-            ),
+            modifier
+                .clip(shape)
+                .clickable(
+                    interactionSource, indication = LocalIndication.current, onClick = onClick),
         border = BorderStroke(1.dp, SolidColor(Color.DarkGray)),
         shape = shape,
         shadowElevation = 8.dp,
         // interactionSource = interactionSource
     ) {
         Column(
-            modifier = Modifier.padding(4.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            if (resource == null) {
-                Box(
-                    modifier =
-                    Modifier.width(100.dp)
-                        .height(100.dp)
-                        .background(
-                            color = MaterialTheme.colorScheme.background,
-                            shape = RoundedCornerShape(6.dp),
-                        )
-                )
-            } else {
-                Image(
-                    modifier =
-                    Modifier.width(100.dp)
-                        .height(100.dp)
-                        .background(
-                            color = MaterialTheme.colorScheme.background,
-                            shape = RoundedCornerShape(6.dp),
-                        ),
-                    contentDescription = null,
-                    painter = painterResource(resource)
-                )
+            modifier = Modifier.padding(4.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                if (resource == null) {
+                    Box(
+                        modifier =
+                            Modifier.width(100.dp)
+                                .height(100.dp)
+                                .background(
+                                    color = MaterialTheme.colorScheme.background,
+                                    shape = RoundedCornerShape(6.dp),
+                                ))
+                } else {
+                    Image(
+                        modifier =
+                            Modifier.width(100.dp)
+                                .height(100.dp)
+                                .background(
+                                    color = MaterialTheme.colorScheme.background,
+                                    shape = RoundedCornerShape(6.dp),
+                                ),
+                        contentDescription = null,
+                        painter = painterResource(resource))
+                }
+                Text(
+                    text = op.displayableString,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = 8.dp).height(40.dp))
             }
-            Text(
-                text = op.displayableString,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 8.dp).height(40.dp)
-            )
-        }
     }
 }

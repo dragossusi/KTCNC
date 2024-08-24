@@ -63,7 +63,6 @@ fun HandWheelStatus(uiModel: HandWheelsUiModel?, modifier: Modifier = Modifier) 
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun JogWheel(axisLetter: Char, activeColor: Color, modifier: Modifier = Modifier) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {

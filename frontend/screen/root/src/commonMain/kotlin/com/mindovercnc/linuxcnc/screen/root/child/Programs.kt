@@ -1,6 +1,7 @@
 package com.mindovercnc.linuxcnc.screen.root.child
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,14 +15,15 @@ import com.mindovercnc.linuxcnc.screen.programs.root.ui.ProgramsRootFab
 import com.mindovercnc.linuxcnc.screen.programs.root.ui.ProgramsRootScreenUi
 import com.mindovercnc.linuxcnc.screen.root.RootComponent
 
-class Programs(val component: ProgramsRootComponent) : RootChild(RootComponent.Config.Programs) {
+class Programs(private val component: ProgramsRootComponent) :
+    RootChild(RootComponent.Config.Programs) {
 
     @Composable
     override fun NavigationIcon(modifier: Modifier) {
         val childStack by component.childStack.subscribeAsState()
         if (childStack.items.size > 1) {
             IconButton(modifier = modifier, onClick = component::navigateUp) {
-                Icon(Icons.Default.ArrowBack, contentDescription = null)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
             }
         }
     }

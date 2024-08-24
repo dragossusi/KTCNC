@@ -16,7 +16,7 @@ import com.mindovercnc.linuxcnc.numpad.data.InputType
 import com.mindovercnc.linuxcnc.screen.tools.add.feedspeed.AddEditFeedsAndSpeedsComponent
 import com.mindovercnc.linuxcnc.screen.tools.add.feedspeed.AddEditFeedsAndSpeedsState
 import com.mindovercnc.linuxcnc.widgets.NumericInputWithUnit
-import com.mindovercnc.linuxcnc.widgets.VerticalDivider
+import androidx.compose.material3.VerticalDivider
 import com.mindovercnc.model.MaterialCategory
 
 @Composable

@@ -19,7 +19,7 @@ import com.mindovercnc.linuxcnc.screen.tools.list.tabs.cuttinginsert.ui.FeedsAnd
 import com.mindovercnc.linuxcnc.screen.tools.list.tabs.cuttinginsert.ui.StandardInsert
 import com.mindovercnc.linuxcnc.screen.tools.root.ToolsRootComponent
 import com.mindovercnc.linuxcnc.tools.model.MadeOf
-import com.mindovercnc.linuxcnc.widgets.VerticalDivider
+import androidx.compose.material3.VerticalDivider
 
 @Composable
 fun AddEditCuttingInsertScreenUi(

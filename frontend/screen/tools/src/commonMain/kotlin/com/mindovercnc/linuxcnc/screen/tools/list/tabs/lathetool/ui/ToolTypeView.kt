@@ -17,7 +17,6 @@ import ktcnc.frontend.screen.tools.generated.resources.lathe_tool
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun ToolTypeView(
     type: ToolType,

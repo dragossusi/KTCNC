@@ -70,7 +70,6 @@ private fun TipOrientationRow(
     }
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun TipOrientationUi(
     orientation: TipOrientation,

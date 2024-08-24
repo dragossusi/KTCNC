@@ -32,25 +32,24 @@ class ManualRootScreenModel(
             source = navigation,
             initialConfiguration = Config.Turning,
             childFactory = ::createChild,
-            serializer = Config.serializer()
-        )
+            serializer = Config.serializer())
 
     override val childStack: Value<ChildStack<*, Child>> = _childStack
 
     override fun openVirtualLimits() {
-        navigation.push(Config.VirtualLimits)
+        navigation.bringToFront(Config.VirtualLimits)
     }
 
     override fun openSimpleCycles(simpleCycle: SimpleCycle) {
-        navigation.push(Config.SimpleCycles(simpleCycle))
+        navigation.bringToFront(Config.SimpleCycles(simpleCycle))
     }
 
     override fun openTurningSettings() {
-        navigation.push(Config.TurningSettings)
+        navigation.bringToFront(Config.TurningSettings)
     }
 
     override fun openTaperSettings() {
-        navigation.push(Config.TaperSettings)
+        navigation.bringToFront(Config.TaperSettings)
     }
 
     override fun navigateUp() {

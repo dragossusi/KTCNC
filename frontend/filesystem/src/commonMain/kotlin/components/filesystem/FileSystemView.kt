@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -15,7 +16,8 @@ import scroll.VerticalScrollbar
 import scroll.draggableScroll
 
 @Composable
-fun FileSystemView(data: FileSystemData, modifier: Modifier = Modifier) {
+fun FileSystemView(data: FileSystemData,
+                   modifier: Modifier = Modifier) {
     val scrollState = rememberLazyListState()
     val scope = rememberCoroutineScope()
 
@@ -23,7 +25,7 @@ fun FileSystemView(data: FileSystemData, modifier: Modifier = Modifier) {
         LazyColumn(modifier = Modifier.draggableScroll(scrollState, scope), state = scrollState) {
             items(data.items) { item ->
                 FileSystemItemView(item)
-                Divider(color = Color.LightGray, thickness = 0.5.dp)
+                HorizontalDivider(thickness = 0.5.dp, color = Color.LightGray)
             }
         }
         VerticalScrollbar(

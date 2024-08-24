@@ -25,7 +25,7 @@ import com.mindovercnc.linuxcnc.screen.tools.list.tabs.lathetool.ui.ToolTypeView
 import com.mindovercnc.linuxcnc.screen.tools.root.ToolsRootComponent
 import com.mindovercnc.linuxcnc.tools.model.CuttingInsert
 import com.mindovercnc.linuxcnc.tools.model.ToolType
-import com.mindovercnc.linuxcnc.widgets.VerticalDivider
+import androidx.compose.material3.VerticalDivider
 import com.mindovercnc.model.SpindleDirection
 import com.mindovercnc.model.TipOrientation
 import scroll.draggableScroll

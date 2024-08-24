@@ -3,10 +3,7 @@ package com.mindovercnc.linuxcnc.screen.manual.turning.ui
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -30,7 +27,7 @@ fun ManualTurningDrawerContent(
             text = "Simple Cycles",
             style = MaterialTheme.typography.headlineSmall,
         )
-        Divider(modifier = Modifier.fillMaxWidth().padding())
+        HorizontalDivider(modifier = Modifier.fillMaxWidth().padding())
 
         SimpleCyclesGrid(
             items = items,

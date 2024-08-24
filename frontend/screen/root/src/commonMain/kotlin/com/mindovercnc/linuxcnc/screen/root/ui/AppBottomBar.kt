@@ -82,7 +82,6 @@ private fun RowScope.TabNavigationItem(
     )
 }
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 private fun BottomIcon(tab: RootComponent.Config, tint: Color, modifier: Modifier = Modifier) {
     val painter =
