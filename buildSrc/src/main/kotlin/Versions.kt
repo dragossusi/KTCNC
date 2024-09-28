@@ -1,8 +1,8 @@
 object Versions {
     const val kotlin = "2.0.10"
     const val ksp = "2.0.10-1.0.24"
-    const val compose = "1.7.0-alpha03"
-    const val material3adaptive = "1.0.0-alpha01"
+    const val compose = "1.7.0-beta02"
+    const val material3adaptive = "1.0.0-alpha03"
     const val kodein = "7.21.1"
 
     const val okio = "3.9.0"
@@ -14,13 +14,15 @@ object Versions {
 
     const val bignum = "0.3.8"
     const val mockk = "1.13.7"
-    const val decompose = "3.2.0-alpha04"
+    const val decompose = "3.2.0-beta01"
+    const val ktor = "2.3.12"
 
     object Kotlinx {
         const val datetime = "0.6.0-RC"
         const val cli = "0.3.6"
         const val coroutines = "1.8.0"
         const val serialization = "1.6.3"
+        const val rpc = "0.2.4"
     }
 
     object Log {

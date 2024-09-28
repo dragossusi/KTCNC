@@ -14,7 +14,7 @@ object Libs {
         val navigation =
             "org.jetbrains.compose.material3.adaptive:adaptive-navigation:${Versions.material3adaptive}"
         val navigationSuite =
-            "org.jetbrains.compose.material3.adaptive:adaptive-navigation-suite:${Versions.material3adaptive}"
+            "org.jetbrains.compose.material3:material3-adaptive-navigation-suite:${Versions.compose}"
     }
 
     object Decompose {
@@ -55,6 +55,16 @@ object Libs {
             "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.Kotlinx.serialization}"
         const val json_okio =
             "org.jetbrains.kotlinx:kotlinx-serialization-json-okio:${Versions.Kotlinx.serialization}"
+    }
+
+    object Rpc {
+        const val core = "org.jetbrains.kotlinx:kotlinx-rpc-core:${Versions.Kotlinx.rpc}"
+        const val client = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-client:${Versions.Kotlinx.rpc}"
+        const val server = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-server:${Versions.Kotlinx.rpc}"
+        const val ktorServer = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-server:${Versions.Kotlinx.rpc}"
+        const val ktorClient = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-server:${Versions.Kotlinx.rpc}"
+        const val serializationJson =
+            "org.jetbrains.kotlinx:kotlinx-rpc-krpc-serialization-json:${Versions.Kotlinx.rpc}"
     }
 
     object Kodein {

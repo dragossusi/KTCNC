@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string name="status_grid_column_type">Type</string>
+    <string name="status_grid_column_message">Message</string>
+</resources>

@@ -52,5 +52,5 @@ kotlin {
 
 // Roborazzi Desktop support uses Context Receivers
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions { freeCompilerArgs += "-Xcontext-receivers" }
+    compilerOptions { freeCompilerArgs.add("-Xcontext-receivers") }
 }

@@ -2,6 +2,7 @@ package com.mindovercnc.linuxcnc.screen.root.child
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,7 +22,7 @@ class Manual(val component: ManualRootComponent) : RootChild(RootComponent.Confi
         val childStack by component.childStack.subscribeAsState()
         if (childStack.items.size > 1) {
             IconButton(modifier = modifier, onClick = component::navigateUp) {
-                Icon(Icons.Default.ArrowBack, contentDescription = null)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
             }
         }
     }

@@ -1,13 +1,11 @@
 package com.mindovercnc.linuxcnc.screen.root.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.*
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
+import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,17 +25,28 @@ fun RootUi(root: RootComponent, modifier: Modifier = Modifier) {
     val childStack by root.childStack.subscribeAsState()
     val state by root.state.collectAsState()
     val active = childStack.active.instance
-    Scaffold(
+    val navigationSuiteItemColors =
+        NavigationSuiteDefaults.itemColors(
+            navigationBarItemColors =
+                NavigationBarItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.secondary,
+                    selectedIconColor = MaterialTheme.colorScheme.onSecondary,
+                ),
+            navigationRailItemColors =
+                NavigationRailItemDefaults.colors(
+                    indicatorColor = MaterialTheme.colorScheme.secondary,
+                    selectedIconColor = MaterialTheme.colorScheme.onSecondary,
+                ),
+        )
+
+    NavigationSuiteScaffold(
         modifier = modifier,
-        topBar = { NewTopAppBar(active) },
-        bottomBar = {
-            // TODO
-            AppBottomBar(
-                modifier = Modifier.height(60.dp),
+        navigationSuiteItems = {
+            appNavigationItems(
+                tabs = root.tabs,
                 enabled = true, // todo uiState.isBottomBarEnabled,
                 selected = active,
                 onClick = root::openTab,
-                tabs = root.tabs,
                 badgeValue = {
                     when (it) {
                         RootComponent.Config.Tools -> {
@@ -46,15 +55,24 @@ fun RootUi(root: RootComponent, modifier: Modifier = Modifier) {
 
                         else -> null
                     }
-                })
+                },
+                colors = navigationSuiteItemColors,
+            )
         },
-        floatingActionButton = { active.Fab(Modifier) },
-    ) { padding ->
-        Children(
-            stack = childStack,
-            modifier = Modifier.padding(padding),
-        ) {
-            it.instance.Content(Modifier.fillMaxSize())
+//        navigationSuiteColors =
+//            NavigationSuiteDefaults.colors(
+//                navigationRailContainerColor = MaterialTheme.colorScheme.primaryContainer,
+//                navigationRailContainerColor = MaterialTheme.colorScheme.primaryContainer,
+//            ),
+    ) {
+        Scaffold(
+            topBar = { NewTopAppBar(active) },
+            floatingActionButton = { active.Fab(Modifier) },
+            modifier = Modifier.fillMaxSize(),
+        ) { padding ->
+            Children(stack = childStack, modifier = Modifier.padding(padding)) {
+                it.instance.Content(Modifier.fillMaxSize())
+            }
         }
     }
 }
@@ -66,7 +84,8 @@ private fun NewTopAppBar(active: RootChild) {
         title = { active.Title(Modifier) },
         navigationIcon = { active.NavigationIcon(iconButtonModifier) },
         actions = { with(active) { Actions() } },
-        modifier = Modifier.shadow(3.dp))
+        modifier = Modifier.shadow(3.dp),
+    )
 }
 
 @Composable

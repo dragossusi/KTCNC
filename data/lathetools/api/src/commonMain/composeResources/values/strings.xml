@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <string name="tooltype_turning">Turning</string>
+    <string name="tooltype_boring">"Boring</string>
+    <string name="tooltype_drilling">Drilling</string>
+    <string name="tooltype_reaming">Reaming</string>
+    <string name="tooltype_parting">Parting</string>
+    <string name="tooltype_grooving">Grooving</string>
+    <string name="tooltype_od_threading">Od Threading</string>
+    <string name="tooltype_id_threading">Id Threading</string>
+    <string name="tooltype_key_Slotting">Key Slotting</string>
+</resources>

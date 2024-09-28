@@ -2,6 +2,7 @@ package com.mindovercnc.linuxcnc.screen.root.child
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -13,14 +14,14 @@ import com.mindovercnc.linuxcnc.screen.root.RootComponent
 import com.mindovercnc.linuxcnc.screen.tools.root.ToolsRootComponent
 import com.mindovercnc.linuxcnc.screen.tools.root.ui.ToolsRootScreenUi
 
-class Tools(val component: ToolsRootComponent) : RootChild(RootComponent.Config.Tools) {
+class Tools(private val component: ToolsRootComponent) : RootChild(RootComponent.Config.Tools) {
 
     @Composable
     override fun NavigationIcon(modifier: Modifier) {
         val childStack by component.childStack.subscribeAsState()
         if (childStack.items.size > 1) {
             IconButton(modifier = modifier, onClick = component::navigateUp) {
-                Icon(Icons.Default.ArrowBack, contentDescription = null)
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
             }
         }
     }

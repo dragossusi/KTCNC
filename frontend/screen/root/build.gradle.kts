@@ -36,7 +36,7 @@ kotlin {
 
                 implementation(Libs.Adaptive.navigation)
                 implementation(Libs.Adaptive.layout)
-                // implementation(Libs.Adaptive.navigationSuite)
+                implementation(Libs.Adaptive.navigationSuite)
 
                 // internal modules
                 implementation(project(":frontend:clipboard"))

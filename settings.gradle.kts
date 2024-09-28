@@ -11,6 +11,8 @@ pluginManagement {
 // backend
 run {
     include("backend:database")
+    include("backend:server")
+    include("backend:rpc")
 }
 
 // data

@@ -24,8 +24,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.domain.model.Message
 import com.mindovercnc.linuxcnc.screen.status.root.StatusRootComponent
+import ktcnc.frontend.screen.status.generated.resources.Res
+import ktcnc.frontend.screen.status.generated.resources.status_grid_column_message
+import ktcnc.frontend.screen.status.generated.resources.status_grid_column_type
+import org.jetbrains.compose.resources.stringResource
 import scroll.draggableScroll
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -42,25 +45,22 @@ fun StatusRootScreenUi(component: StatusRootComponent, modifier: Modifier = Modi
 
 @Composable
 private fun MessagesHeader(modifier: Modifier = Modifier) {
-    Surface(
-        color = MaterialTheme.colorScheme.primaryContainer,
-        modifier = modifier,
-    ) {
+    Surface(color = MaterialTheme.colorScheme.primaryContainer, modifier = modifier) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
                 modifier =
-                Modifier.width(100.dp).border(width = 0.5.dp, Color.LightGray).padding(8.dp),
+                    Modifier.width(100.dp).border(width = 0.5.dp, Color.LightGray).padding(8.dp),
                 textAlign = TextAlign.Center,
-                text = "Type"
+                text = stringResource(Res.string.status_grid_column_type),
             )
             Text(
                 modifier =
-                Modifier.weight(1f).border(width = 0.5.dp, Color.LightGray).padding(8.dp),
+                    Modifier.weight(1f).border(width = 0.5.dp, Color.LightGray).padding(8.dp),
                 textAlign = TextAlign.Center,
-                text = "Message"
+                text = stringResource(Res.string.status_grid_column_message),
             )
         }
     }
@@ -71,12 +71,12 @@ private fun MessageRow(item: Message, modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier.clickable {}
+        modifier = modifier.clickable {},
     ) {
         Text(
             modifier = Modifier.width(100.dp).border(width = 0.5.dp, Color.LightGray).padding(8.dp),
             textAlign = TextAlign.Center,
-            text = item.level.name
+            text = item.level.name,
         )
         Text(
             item.text,

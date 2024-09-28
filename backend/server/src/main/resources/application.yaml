@@ -1,0 +1,6 @@
+ktor:
+  application:
+    modules:
+      - ro.dragossusi.ktcnc.server.KtcncServer.module
+  deployment:
+    port: 8080

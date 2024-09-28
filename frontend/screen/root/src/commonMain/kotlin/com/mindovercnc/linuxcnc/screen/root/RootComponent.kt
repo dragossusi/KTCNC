@@ -9,6 +9,8 @@ import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import com.mindovercnc.linuxcnc.screen.root.child.RootChild
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
+import ktcnc.frontend.screen.root.generated.resources.*
+import org.jetbrains.compose.resources.StringResource
 import org.kodein.di.compose.localDI
 
 interface RootComponent : BackHandlerOwner {
@@ -21,19 +23,39 @@ interface RootComponent : BackHandlerOwner {
 
     @Serializable
     sealed interface Config {
+        val label: StringResource
+
         @Serializable
-        data object Manual : Config
+        data object Manual : Config {
+            override val label: StringResource
+                get() = Res.string.root_navigation_tab_manual
+        }
+
         @Serializable
-        data object Conversational : Config
+        data object Conversational : Config {
+            override val label: StringResource
+                get() = Res.string.root_navigation_tab_conversational
+        }
+
         @Serializable
-        data object Programs : Config
+        data object Programs : Config {
+            override val label: StringResource
+                get() = Res.string.root_navigation_tab_programs
+        }
+
         @Serializable
-        data object Tools : Config
+        data object Tools : Config {
+            override val label: StringResource
+                get() = Res.string.root_navigation_tab_tools
+        }
+
         @Serializable
-        data object Status : Config
+        data object Status : Config {
+            override val label: StringResource
+                get() = Res.string.root_navigation_tab_status
+        }
     }
 }
-
 
 @Composable
 fun createRootComponent(componentContext: ComponentContext): RootComponent {
