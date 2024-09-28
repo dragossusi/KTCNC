@@ -1,12 +1,13 @@
 package com.mindovercnc.data.linuxcnc
 
-import com.mindovercnc.data.linuxcnc.model.FileResponse
-import okio.Path
+import ro.dragossusi.ktcnc.rpc.FileResponse
 
 interface FileSystemRepository {
-    fun getNcRootAppFile(): Path
+    suspend fun getNcRootAppFile(): FileResponse
 
-    fun getFilesInPath(path: Path): List<FileResponse>
+    suspend fun getFile(path: String): FileResponse
+
+    suspend fun getFilesInPath(path: String): List<FileResponse>
 
     suspend fun writeProgramLines(lines: List<String>, programName: String)
 }

@@ -1,20 +1,24 @@
 package com.mindovercnc.data.linuxcnc.remote
 
 import com.mindovercnc.data.linuxcnc.FileSystemRepository
-import com.mindovercnc.data.linuxcnc.model.FileResponse
 import mu.KotlinLogging
-import okio.Path
-import okio.Path.Companion.toPath
+import ro.dragossusi.ktcnc.rpc.FileResponse
+import ro.dragossusi.ktcnc.rpc.FileSystemService
 
-class FileSystemRepositoryRemote : FileSystemRepository {
-    override fun getNcRootAppFile(): Path {
-        // TODO
-        return ".".toPath()
+class FileSystemRepositoryRemote(
+    private val fileSystemService: FileSystemService
+) : FileSystemRepository {
+    override suspend fun getFile(path: String): FileResponse {
+        return fileSystemService.getFile(path)
     }
 
-    override fun getFilesInPath(path: Path): List<FileResponse> {
+    override suspend fun getNcRootAppFile(): FileResponse {
+        return fileSystemService.getRoot()
+    }
+
+    override suspend fun getFilesInPath(path: String): List<FileResponse> {
         // TODO
-        return emptyList()
+        return fileSystemService.getFilesInPath(path)
     }
 
     override suspend fun writeProgramLines(lines: List<String>, programName: String) {

@@ -52,18 +52,12 @@ fun RootUi(root: RootComponent, modifier: Modifier = Modifier) {
                         RootComponent.Config.Tools -> {
                             "T${state.currentTool}"
                         }
-
                         else -> null
                     }
                 },
                 colors = navigationSuiteItemColors,
             )
         },
-//        navigationSuiteColors =
-//            NavigationSuiteDefaults.colors(
-//                navigationRailContainerColor = MaterialTheme.colorScheme.primaryContainer,
-//                navigationRailContainerColor = MaterialTheme.colorScheme.primaryContainer,
-//            ),
     ) {
         Scaffold(
             topBar = { NewTopAppBar(active) },

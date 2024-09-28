@@ -5,12 +5,14 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -25,13 +27,12 @@ import com.mindovercnc.linuxcnc.listitem.LabelWithValue
 import com.mindovercnc.linuxcnc.screen.tools.list.tabs.data.ToolHolderColumn
 import com.mindovercnc.linuxcnc.screen.tools.list.tabs.toolholder.HoldersToolsState
 import com.mindovercnc.linuxcnc.tools.model.ToolHolder
-import androidx.compose.material3.VerticalDivider
+import kotlinx.coroutines.CoroutineScope
 import scroll.VerticalScrollbar
 import scroll.draggableScroll
 
 private val itemModifier = Modifier.fillMaxWidth()
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ToolHoldersContent(
     state: HoldersToolsState,
@@ -46,9 +47,28 @@ fun ToolHoldersContent(
     Box(modifier = modifier) {
         val scrollState = rememberLazyListState()
 
+        Table(scrollState, scope, state, onEdit, onDelete, onLoad, onMount, modifier = Modifier.padding(8.dp))
+
+        VerticalScrollbar(Modifier.align(Alignment.CenterEnd).width(30.dp), scrollState)
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun Table(
+    scrollState: LazyListState,
+    scope: CoroutineScope,
+    state: HoldersToolsState,
+    onEdit: (ToolHolder) -> Unit,
+    onDelete: (ToolHolder) -> Unit,
+    onLoad: (ToolHolder) -> Unit,
+    onMount: (ToolHolder) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Surface(shape = RoundedCornerShape(8.dp), shadowElevation = 3.dp, modifier = modifier) {
         LazyColumn(modifier = Modifier.draggableScroll(scrollState, scope), state = scrollState) {
             stickyHeader { ToolHolderHeader(modifier = Modifier.height(40.dp)) }
-            items(state.toolHolders) { item ->
+            itemsIndexed(state.toolHolders) { index, item ->
                 ToolHolderView(
                     item = item,
                     isCurrent = item.holderNumber == state.currentTool,
@@ -56,21 +76,20 @@ fun ToolHoldersContent(
                     onDeleteClicked = onDelete,
                     onLoadClicked = onLoad,
                     onMountClicked = onMount,
-                    modifier = itemModifier,
-                    // color = gridRowColorFor(index)
+                    modifier = itemModifier
                 )
-                Divider(color = Color.LightGray, thickness = 0.5.dp)
+                if (index != state.toolHolders.lastIndex) {
+                    HorizontalDivider()
+                }
             }
         }
-
-        VerticalScrollbar(Modifier.align(Alignment.CenterEnd).width(30.dp), scrollState)
     }
 }
 
 @Composable
 fun ToolHolderHeader(modifier: Modifier = Modifier) {
-    Surface(color = MaterialTheme.colorScheme.primaryContainer) {
-        Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+    Surface(color = MaterialTheme.colorScheme.primaryContainer, modifier = modifier) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             ToolHolderColumn.entries.forEach {
                 val textModifier =
                     when (it.size) {
@@ -172,7 +191,7 @@ private fun ToolHolderView(
                     enabled = isCurrent.not(),
                     onClick = { onLoadClicked.invoke(item) }
                 ) {
-                    Icon(Icons.Default.ExitToApp, contentDescription = null)
+                    Icon(Icons.AutoMirrored.Filled.ExitToApp, contentDescription = null)
                 }
             }
         }

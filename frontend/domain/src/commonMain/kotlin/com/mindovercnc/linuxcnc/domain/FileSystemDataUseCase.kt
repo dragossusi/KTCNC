@@ -4,22 +4,23 @@ import clipboard.Clipboard
 import com.mindovercnc.data.linuxcnc.FileSystemRepository
 import components.filesystem.FileSystemData
 import components.filesystem.FileSystemItemData
-import okio.Path
+import ro.dragossusi.ktcnc.rpc.FileResponse
 
 class FileSystemDataUseCase(
     private val fileSystemRepository: FileSystemRepository
 ) {
 
-    fun Path.toFileSystemData(onItemClick: (Path) -> Unit): FileSystemData {
-        val items = fileSystemRepository.getFilesInPath(this)
+    suspend fun FileResponse.toFileSystemData(onItemClick: (FileResponse) -> Unit): FileSystemData {
+        val items = fileSystemRepository.getFilesInPath(path)
             .map { item ->
                 FileSystemItemData(
                     title = item.name,
                     isDirectory = item.isDirectory,
-                    lastModified = item.lastModified,
+                    // todo add it back when supported by kotlinx io
+                    lastModified = null,
                     path = item.path,
-                    onClick = { onItemClick(item.path) },
-                    onCopy = { Clipboard.write(item.toString()) }
+                    onClick = { onItemClick(item) },
+                    onCopy = { Clipboard.write(item.path) }
                 )
             }
             .sortedWith(compareBy({ it.isDirectory }, { it.title }))

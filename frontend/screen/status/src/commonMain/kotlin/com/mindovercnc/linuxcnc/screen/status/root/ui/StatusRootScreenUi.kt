@@ -1,18 +1,17 @@
 package com.mindovercnc.linuxcnc.screen.status.root.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.mindovercnc.linuxcnc.domain.model.Message
 import com.mindovercnc.linuxcnc.screen.status.root.StatusRootComponent
+import com.mindovercnc.linuxcnc.screen.status.root.StatusRootState
 import ktcnc.frontend.screen.status.generated.resources.Res
 import ktcnc.frontend.screen.status.generated.resources.status_grid_column_message
 import ktcnc.frontend.screen.status.generated.resources.status_grid_column_type
@@ -34,31 +34,39 @@ import scroll.draggableScroll
 @Composable
 fun StatusRootScreenUi(component: StatusRootComponent, modifier: Modifier = Modifier) {
     val state by component.state.collectAsState()
-    val scope = rememberCoroutineScope()
-    val scrollState = rememberLazyListState()
 
-    LazyColumn(modifier = modifier.draggableScroll(scrollState, scope), state = scrollState) {
-        stickyHeader { MessagesHeader() }
-        items(state.messages) { item -> MessageRow(item) }
+    Table(state, modifier.padding(8.dp))
+}
+
+@Composable
+@OptIn(ExperimentalFoundationApi::class)
+private fun Table(
+    state: StatusRootState,
+    modifier: Modifier = Modifier
+) {
+    val scrollState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+    Box(modifier) {
+        Surface(shape = RoundedCornerShape(8.dp), border = BorderStroke(1.dp, Color.LightGray)) {
+            LazyColumn(modifier = Modifier.fillMaxWidth().draggableScroll(scrollState, scope), state = scrollState) {
+                stickyHeader { MessagesHeader() }
+                items(state.messages) { item -> MessageRow(item) }
+            }
+        }
     }
 }
 
 @Composable
 private fun MessagesHeader(modifier: Modifier = Modifier) {
-    Surface(color = MaterialTheme.colorScheme.primaryContainer, modifier = modifier) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
+    Surface(color = MaterialTheme.colorScheme.primaryContainer, modifier = modifier.fillMaxWidth()) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                modifier =
-                    Modifier.width(100.dp).border(width = 0.5.dp, Color.LightGray).padding(8.dp),
+                modifier = Modifier.width(100.dp),
                 textAlign = TextAlign.Center,
                 text = stringResource(Res.string.status_grid_column_type),
             )
+            VerticalDivider(color = Color.LightGray)
             Text(
-                modifier =
-                    Modifier.weight(1f).border(width = 0.5.dp, Color.LightGray).padding(8.dp),
                 textAlign = TextAlign.Center,
                 text = stringResource(Res.string.status_grid_column_message),
             )
@@ -70,17 +78,17 @@ private fun MessagesHeader(modifier: Modifier = Modifier) {
 private fun MessageRow(item: Message, modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier.clickable {},
     ) {
         Text(
-            modifier = Modifier.width(100.dp).border(width = 0.5.dp, Color.LightGray).padding(8.dp),
+            modifier = Modifier.width(100.dp).padding(8.dp),
             textAlign = TextAlign.Center,
             text = item.level.name,
         )
+        VerticalDivider(thickness = 2.dp, color = Color.LightGray)
         Text(
             item.text,
-            modifier = Modifier.weight(1f).border(width = 0.5.dp, Color.LightGray).padding(8.dp),
+            modifier = Modifier.weight(1f).padding(8.dp),
         )
     }
 }

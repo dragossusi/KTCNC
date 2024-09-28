@@ -9,7 +9,7 @@ data class FileSystemItemData(
     val title: String,
     val isDirectory: Boolean,
     val lastModified: Instant?,
-    val path: Path,
+    val path: String,
     val onClick: () -> Unit,
     val onCopy: () -> Unit,
 )

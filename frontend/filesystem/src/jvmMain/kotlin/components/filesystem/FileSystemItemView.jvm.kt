@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toJavaInstant
 import okio.Path
+import okio.Path.Companion.toPath
 import java.awt.datatransfer.DataFlavor
 import java.awt.datatransfer.Transferable
 import java.time.ZoneId
@@ -34,7 +35,7 @@ actual fun FileSystemItemView(item: FileSystemItemData, modifier: Modifier) {
         }
     ) {
         ListItem(
-            modifier = modifier.clickable(onClick = item.onClick).fileDragSource(item.path),
+            modifier = modifier.clickable(onClick = item.onClick).fileDragSource(item.path.toPath()),
             colors = ListItemDefaults.colors(containerColor = colorFor(item)),
             headlineContent = {
                 Text(

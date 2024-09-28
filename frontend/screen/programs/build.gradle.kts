@@ -52,6 +52,8 @@ kotlin {
                 implementation(project(":data:gcode:api"))
                 implementation(project(":data:settings:api"))
 
+                implementation(project(":backend:rpc"))
+
                 implementation(project(":frontend:breadcrumb"))
                 implementation(project(":frontend:filesystem"))
                 implementation(project(":frontend:scroll"))

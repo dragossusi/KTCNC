@@ -4,13 +4,15 @@ import components.breadcrumb.BreadCrumbData
 import components.breadcrumb.BreadCrumbItemData
 import okio.FileSystem
 import okio.Path
+import okio.Path.Companion.toPath
+import ro.dragossusi.ktcnc.rpc.FileResponse
 
 class BreadCrumbDataUseCase constructor(
     private val fileSystem: FileSystem
 ) {
 
-    fun Path.toBreadCrumbData(onItemClick: (Path) -> Unit): BreadCrumbData {
-        val directories = directories()
+    fun FileResponse.toBreadCrumbData(onItemClick: (Path) -> Unit): BreadCrumbData {
+        val directories = path.toPath().directories()
 
         return BreadCrumbData(
             directories.map { path ->

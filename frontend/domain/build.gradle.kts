@@ -35,8 +35,11 @@ kotlin {
                 implementation(compose.components.resources)
 
                 // internal modules
+                implementation(project(":backend:rpc"))
+
                 implementation(project(":frontend:clipboard"))
                 implementation(project(":frontend:actor"))
+
                 implementation(project(":dispatcher"))
                 implementation(project(":editor"))
                 implementation(project(":model"))

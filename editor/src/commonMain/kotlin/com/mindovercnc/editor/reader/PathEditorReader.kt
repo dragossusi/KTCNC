@@ -12,30 +12,6 @@ import okio.Path
 import okio.internal.commonToUtf8String
 
 class PathEditorReader(private val fileSystem: FileSystem) : EditorReader {
-    override fun Path.readLinePositions(starts: IntList) {
-        fileSystem.read(this) {
-            val length = this.buffer.size
-            require(length <= Int.MAX_VALUE) { "Files with size over ${Int.MAX_VALUE} aren't supported" }
-
-            starts.update(capacity = length.toInt() / averageLineLength) {
-                try {
-                    var position = 0L
-                    while (!exhausted()) {
-                        val line = readUtf8Line()
-                        if (line != null) {
-                            starts.add(position.toInt())
-                        }
-                        position++
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    starts.clear(1)
-                    starts.add(0)
-                }
-            }
-        }
-    }
-
     override fun Path.readTextLines(scope: CoroutineScope): TextLines {
         val buffer = fileSystem.read(this) { buffer.copy() }
 
@@ -77,6 +53,30 @@ class PathEditorReader(private val fileSystem: FileSystem) : EditorReader {
 
                 val text = bytearray.commonToUtf8String()
                 return TextLineContent(index + 1, text)
+            }
+        }
+    }
+
+    private fun Path.readLinePositions(starts: IntList) {
+        fileSystem.read(this) {
+            val length = this.buffer.size
+            require(length <= Int.MAX_VALUE) { "Files with size over ${Int.MAX_VALUE} aren't supported" }
+
+            starts.update(capacity = length.toInt() / averageLineLength) {
+                try {
+                    var position = 0L
+                    while (!exhausted()) {
+                        val line = readUtf8Line()
+                        if (line != null) {
+                            starts.add(position.toInt())
+                        }
+                        position++
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    starts.clear(1)
+                    starts.add(0)
+                }
             }
         }
     }

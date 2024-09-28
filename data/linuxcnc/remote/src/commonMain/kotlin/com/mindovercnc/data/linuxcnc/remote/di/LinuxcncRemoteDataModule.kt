@@ -21,5 +21,5 @@ val LinuxcncRemoteDataModule = DI.Module("linuxcnc_remote_data") {
 
     bindSingleton<LinuxCncToolsRepository> { LinuxCncToolsRepositoryRemote() }
     bindSingleton<VarFileRepository> { VarFileRepositoryRemote() }
-    bindSingleton<FileSystemRepository> { FileSystemRepositoryRemote() }
+    bindSingleton<FileSystemRepository> { FileSystemRepositoryRemote(instance()) }
 }

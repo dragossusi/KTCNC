@@ -17,6 +17,7 @@ kotlin {
                 implementation(project(":data:linuxcnc:api"))
                 implementation(project(":logger"))
                 implementation(project(":dispatcher"))
+                implementation(project(":backend:rpc"))
                 implementation(project(":protos"))
                 implementation(project(":model"))
                 implementation(Libs.okio)

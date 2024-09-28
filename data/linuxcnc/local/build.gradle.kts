@@ -6,6 +6,7 @@ dependencies {
     implementation(Libs.stdlib)
     implementation(project(":data:linuxcnc:api"))
     implementation(project(":logger"))
+    implementation(project(":backend:rpc"))
     implementation(project(":dispatcher"))
     implementation(project(":ktlcnc"))
     implementation(project(":model"))
