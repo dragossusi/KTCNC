@@ -22,7 +22,7 @@ object Versions {
         const val cli = "0.3.6"
         const val coroutines = "1.8.0"
         const val serialization = "1.6.3"
-        const val rpc = "0.2.4"
+        const val rpc = "0.3.0"
     }
 
     object Log {
