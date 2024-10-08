@@ -1,11 +1,11 @@
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization")
     id("org.jetbrains.kotlinx.rpc.plugin")
     id("io.ktor.plugin")
 }
 
 version = Versions.app
-
 
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
