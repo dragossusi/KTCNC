@@ -36,7 +36,7 @@ object Versions {
         const val plugin = "0.9.4"
         const val protobuf_kotlin = "3.25.5"
         const val grpc_kotlin = "1.4.2"
-        const val grpc = "1.67.0"
+        const val grpc = "1.68.0"
 
         object Wire {
             const val plugin = "5.0.0"
