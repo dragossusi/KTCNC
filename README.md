@@ -1,4 +1,6 @@
-# MindOverCNC Lathe
+# Kotlin CNC
+
+## This is not an officially supported Google product
 
 ## About
 
