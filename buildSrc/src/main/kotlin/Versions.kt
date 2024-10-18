@@ -6,7 +6,7 @@ object Versions {
     const val kodein = "7.21.1"
 
     const val okio = "3.9.1"
-    const val wire = "5.0.0"
+    const val wire = "5.1.0"
     const val roborazzi = "1.29.0"
 
     const val room = "2.7.0-alpha10"
@@ -39,7 +39,7 @@ object Versions {
         const val grpc = "1.68.0"
 
         object Wire {
-            const val plugin = "5.0.0"
+            const val plugin = "5.1.0"
         }
     }
 
