@@ -6,6 +6,7 @@ import com.mindovercnc.database.KtcncDatabase
 import com.mindovercnc.database.initializer.DummyToolsInitializer
 import initializer.Initializer
 import initializer.SimpleInitializer
+import kotlinx.coroutines.Dispatchers
 import org.kodein.di.DI
 import org.kodein.di.bindProvider
 import org.kodein.di.bindSingleton
@@ -18,7 +19,10 @@ fun databaseModule() =
         bindDatabaseBuilder()
         bindSingleton {
             val builder = instance<RoomDatabase.Builder<KtcncDatabase>>()
-            builder.setDriver(BundledSQLiteDriver()).build()
+            builder
+                .setDriver(BundledSQLiteDriver())
+                .setQueryCoroutineContext(Dispatchers.IO)
+                .build()
         }
         bindSingleton<Initializer>("database") {
             SimpleInitializer(
