@@ -79,6 +79,7 @@ internal class DummyToolsInitializer(private val database: KtcncDatabase, privat
     }
 
     private suspend fun createDummyTools() {
+        val entities = listOf(
         LatheToolEntity(
             insertId = getInsertByCode("DCMT").id,
             type = ToolType.Turning,
@@ -86,7 +87,7 @@ internal class DummyToolsInitializer(private val database: KtcncDatabase, privat
             frontAngle = 0.0,
             backAngle = 0.0,
             spindleDirection = SpindleDirection.Reverse,
-        )
+        ),
         LatheToolEntity(
             insertId = getInsertByCode("VCMT").id,
             type = ToolType.Turning,
@@ -94,7 +95,7 @@ internal class DummyToolsInitializer(private val database: KtcncDatabase, privat
             frontAngle = 0.0,
             backAngle = 0.0,
             spindleDirection = SpindleDirection.Reverse,
-        )
+        ),
         LatheToolEntity(
             insertId = getInsertByCode("CCMT").id,
             type = ToolType.Boring,
@@ -104,7 +105,7 @@ internal class DummyToolsInitializer(private val database: KtcncDatabase, privat
             spindleDirection = SpindleDirection.Reverse,
             minBoreDiameter = 20.0,
             maxZDepth = 50.0,
-        )
+        ),
         LatheToolEntity(
             insertId = getInsertByCode("VCMT").id,
             tipOrientation = TipOrientation.Position7.orient,
@@ -112,14 +113,16 @@ internal class DummyToolsInitializer(private val database: KtcncDatabase, privat
             type = ToolType.Parting,
             bladeWidth = 2.0,
             maxXDepth = 20.0,
-        )
+        ),
         LatheToolEntity(
             type = ToolType.Drilling,
             tipOrientation = TipOrientation.Position7.orient,
             spindleDirection = SpindleDirection.Reverse,
             toolDiameter = 8.0,
             maxZDepth = 80.0,
+        ),
         )
+        database.latheToolDao.insertAll(entities)
     }
 
     private suspend fun getInsertByCode(code: String): CuttingInsertEntity {
