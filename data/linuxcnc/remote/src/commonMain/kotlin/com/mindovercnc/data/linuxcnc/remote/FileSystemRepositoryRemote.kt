@@ -1,15 +1,32 @@
 package com.mindovercnc.data.linuxcnc.remote
 
 import com.mindovercnc.data.linuxcnc.FileSystemRepository
+import io.ktor.client.*
+import kotlinx.rpc.krpc.ktor.client.rpc
+import kotlinx.rpc.krpc.ktor.client.rpcConfig
+import kotlinx.rpc.withService
 import mu.KotlinLogging
 import ro.dragossusi.ktcnc.rpc.FileResponse
 import ro.dragossusi.ktcnc.rpc.FileSystemService
 
 class FileSystemRepositoryRemote(
-    private val fileSystemService: FileSystemService
+    private val httpClient: HttpClient
 ) : FileSystemRepository {
+
+    private suspend fun createService() = httpClient.rpc {
+        url {
+            host = "localhost"
+            port = 8080
+        }
+        rpcConfig {
+            serialization {
+                json()
+            }
+        }
+    }.withService<FileSystemService>()
+
     override suspend fun getFile(path: String): FileResponse {
-        return fileSystemService.getFile(path)
+        return createService().getFile(path)
     }
 
     override suspend fun getNcRootAppFile(): FileResponse {

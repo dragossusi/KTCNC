@@ -27,7 +27,6 @@ plugins {
     id("androidx.room") version Versions.room apply false
     // rpc
     id("org.jetbrains.kotlinx.rpc.plugin") version Versions.Kotlinx.rpc apply false
-    id("org.jetbrains.kotlinx.rpc.platform") version Versions.Kotlinx.rpc apply false
 
     id("io.ktor.plugin") version Versions.ktor
 }

@@ -11,9 +11,11 @@ version = Versions.app
 
 kotlin {
     jvm()
-    js(IR) {
-        browser()
-        binaries.executable()
+    if (Platforms.jsEnabled) {
+        js(IR) {
+            browser()
+            binaries.executable()
+        }
     }
 
     sourceSets {
@@ -104,13 +106,15 @@ kotlin {
             }
         }
 
-        val jsMain by getting {
-            dependencies {
-                implementation(project(":data:gcode:remote"))
-                implementation(project(":data:linuxcnc:remote"))
-                implementation(project(":data:settings:remote"))
-                implementation(project(":data:lathetools:remote"))
-                implementation(project(":data:lathehal:remote"))
+        if (Platforms.jsEnabled) {
+            val jsMain by getting {
+                dependencies {
+                    implementation(project(":data:gcode:remote"))
+                    implementation(project(":data:linuxcnc:remote"))
+                    implementation(project(":data:settings:remote"))
+                    implementation(project(":data:lathetools:remote"))
+                    implementation(project(":data:lathehal:remote"))
+                }
             }
         }
 

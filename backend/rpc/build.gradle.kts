@@ -1,24 +1,31 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
-//    id("io.ktor.plugin")
-//    id("org.jetbrains.kotlinx.rpc.plugin")
+    id("org.jetbrains.kotlinx.rpc.plugin")
+}
+
+repositories {
+    mavenCentral()
 }
 
 kotlin {
     jvm()
-    js(IR) {
-        browser()
+
+    if (Platforms.jsEnabled) {
+        js(IR) {
+            browser()
+        }
     }
 
     sourceSets {
         commonMain.dependencies {
             api(Libs.Coroutines.core)
+            api(Libs.Serialization.core)
             api(Libs.Serialization.json)
 
-//            implementation(Libs.Rpc.core)
-//            implementation(Libs.Rpc.serializationJson)
-//            implementation(Libs.datetime)
+            implementation(Libs.Rpc.core)
+            implementation(Libs.Rpc.serializationJson)
+            implementation(Libs.datetime)
         }
     }
 }

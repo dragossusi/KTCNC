@@ -51,14 +51,27 @@ object Libs {
     }
 
     object Serialization {
+        const val core =
+            "org.jetbrains.kotlinx:kotlinx-serialization-core:${Versions.Kotlinx.serialization}"
         const val json =
             "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.Kotlinx.serialization}"
         const val json_okio =
             "org.jetbrains.kotlinx:kotlinx-serialization-json-okio:${Versions.Kotlinx.serialization}"
     }
 
+    object Ktor {
+        object Client {
+            const val core = "io.ktor:ktor-client-core:${Versions.ktor}"
+            const val cio = "io.ktor:ktor-client-cio:${Versions.ktor}"
+        }
+
+        object Server {
+            const val core = "io.ktor:ktor-server-core-jvm:${Versions.ktor}"
+        }
+    }
+
     object Rpc {
-        const val core = "org.jetbrains.kotlinx:kotlinx-rpc-core:${Versions.Kotlinx.rpc}"
+        const val core = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-core:${Versions.Kotlinx.rpc}"
         const val client = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-client:${Versions.Kotlinx.rpc}"
         const val server = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-server:${Versions.Kotlinx.rpc}"
         const val ktorServer = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-server:${Versions.Kotlinx.rpc}"

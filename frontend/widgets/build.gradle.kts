@@ -1,5 +1,3 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
-
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.compose")
@@ -10,8 +8,10 @@ version = Versions.app
 
 kotlin {
     jvm()
-    js(IR) {
-        browser()
+    if (Platforms.jsEnabled) {
+        js(IR) {
+            browser()
+        }
     }
 
     sourceSets {
@@ -33,7 +33,6 @@ kotlin {
                 // compose
                 implementation(compose.materialIconsExtended)
                 implementation(compose.material3)
-                @OptIn(ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 
                 implementation(project(":frontend:numpad"))

@@ -4,8 +4,10 @@ version = Versions.app
 
 kotlin {
     jvm()
-    js(IR) {
-        browser()
+    if (Platforms.jsEnabled) {
+        js(IR) {
+            browser()
+        }
     }
 
     sourceSets {
@@ -22,6 +24,8 @@ kotlin {
                 implementation(project(":model"))
                 implementation(Libs.okio)
                 implementation(Libs.Rpc.ktorClient)
+                implementation(Libs.Rpc.client)
+                implementation(Libs.Ktor.Client.core)
 
                 // logging
                 implementation(Libs.Log.logging)

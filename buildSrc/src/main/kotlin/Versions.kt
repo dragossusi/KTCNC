@@ -2,7 +2,7 @@ object Versions {
     const val kotlin = "2.0.10"
     const val ksp = "2.0.10-1.0.24"
     const val compose = "1.7.0"
-    const val material3adaptive = "1.0.0-alpha03"
+    const val material3adaptive = "1.0.0"
     const val kodein = "7.21.1"
 
     const val okio = "3.9.1"

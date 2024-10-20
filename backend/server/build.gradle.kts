@@ -1,7 +1,6 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
-    id("org.jetbrains.kotlinx.rpc.plugin")
     id("io.ktor.plugin")
 }
 

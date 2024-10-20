@@ -4,8 +4,10 @@ version = Versions.app
 
 kotlin {
     jvm()
-    js(IR) {
-        browser()
+    if (Platforms.jsEnabled) {
+        js(IR) {
+            browser()
+        }
     }
 
     compilerOptions { freeCompilerArgs.add("-Xexpect-actual-classes") }
