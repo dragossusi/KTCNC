@@ -1,15 +1,15 @@
 package com.mindovercnc.linuxcnc.domain
 
+import com.mindovercnc.data.lathehal.HalRepository
+import com.mindovercnc.data.lathehal.model.JoystickStatus
+import com.mindovercnc.data.lathehal.model.SpindleSwitchStatus
 import com.mindovercnc.data.linuxcnc.CncCommandRepository
 import com.mindovercnc.data.linuxcnc.CncStatusRepository
-import com.mindovercnc.data.linuxcnc.HalRepository
+import com.mindovercnc.data.linuxcnc.IniFileRepository
+import com.mindovercnc.data.linuxcnc.model.G53AxisLimits
 import com.mindovercnc.dispatchers.IoDispatcher
-import com.mindovercnc.linuxcnc.gcode.IniFileRepository
 import com.mindovercnc.linuxcnc.settings.SettingsRepository
 import com.mindovercnc.model.CncStateMessage
-import com.mindovercnc.data.linuxcnc.model.G53AxisLimits
-import com.mindovercnc.model.JoystickStatus
-import com.mindovercnc.model.SpindleSwitchStatus
 import com.mindovercnc.repository.CncMessagesRepository
 import com.mindovercnc.repository.MotionStatusRepository
 import io.mockk.coVerify
