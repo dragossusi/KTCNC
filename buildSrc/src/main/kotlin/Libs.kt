@@ -62,7 +62,7 @@ object Libs {
         const val client = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-client:${Versions.Kotlinx.rpc}"
         const val server = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-server:${Versions.Kotlinx.rpc}"
         const val ktorServer = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-server:${Versions.Kotlinx.rpc}"
-        const val ktorClient = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-server:${Versions.Kotlinx.rpc}"
+        const val ktorClient = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-client:${Versions.Kotlinx.rpc}"
         const val serializationJson =
             "org.jetbrains.kotlinx:kotlinx-rpc-krpc-serialization-json:${Versions.Kotlinx.rpc}"
     }

@@ -21,6 +21,7 @@ kotlin {
                 implementation(project(":protos"))
                 implementation(project(":model"))
                 implementation(Libs.okio)
+                implementation(Libs.Rpc.ktorClient)
 
                 // logging
                 implementation(Libs.Log.logging)

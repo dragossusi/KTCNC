@@ -7,6 +7,7 @@ import com.mindovercnc.linuxcnc.tools.LatheToolRepository
 import com.mindovercnc.linuxcnc.tools.model.LatheTool
 import com.mindovercnc.linuxcnc.tools.model.ToolType
 import com.mindovercnc.model.TipOrientation
+import mu.KotlinLogging
 
 /** Implementation for [LatheToolRepository]. */
 class LatheToolRepositoryLocal(
@@ -15,7 +16,9 @@ class LatheToolRepositoryLocal(
 ) : LatheToolRepository {
 
     override suspend fun getLatheTools(): List<LatheTool> {
-        return latheToolDao.getAll().mapNotNull { it.toLatheTool() }
+        return latheToolDao.getAll().also {
+            LOG.info { "Found ${it.size} lathe tools" }
+        }.mapNotNull { it.toLatheTool() }
     }
 
     override suspend fun getUnmountedLatheTools(): List<LatheTool> {
@@ -242,7 +245,14 @@ class LatheToolRepositoryLocal(
                     bladeWidth = bladeWidth!!,
                     maxZDepth = maxZDepth ?: 0.0
                 )
-            else -> null
+            else -> {
+                LOG
+                null
+            }
         }
+    }
+
+    private companion object {
+        val LOG = KotlinLogging.logger("LatheToolRepository")
     }
 }
