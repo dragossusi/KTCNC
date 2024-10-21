@@ -21,7 +21,7 @@ object Versions {
         const val datetime = "0.6.1"
         const val cli = "0.3.6"
         const val coroutines = "1.9.0"
-        const val serialization = "1.7.3"
+        const val serialization = "1.7.1"
         const val rpc = "0.3.0"
     }
 
