@@ -10,7 +10,7 @@ pluginManagement {
 
 // backend
 run {
-    include("backend:client")
+    // include("backend:client")
     include("backend:database")
     include("backend:rpc")
     include("backend:server")
