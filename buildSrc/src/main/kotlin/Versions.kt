@@ -1,6 +1,6 @@
 object Versions {
     const val kotlin = "2.0.10"
-    const val ksp = "2.0.10-1.0.24"
+    const val ksp = "2.0.20-1.0.25"
     const val compose = "1.7.0"
     const val material3adaptive = "1.0.0"
     const val kodein = "7.21.1"
@@ -22,7 +22,7 @@ object Versions {
         const val cli = "0.3.6"
         const val coroutines = "1.9.0"
         const val serialization = "1.7.1"
-        const val rpc = "0.3.0"
+        const val rpc = "0.4.0"
     }
 
     object Log {
