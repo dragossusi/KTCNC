@@ -1,8 +1,10 @@
 package ro.dragossusi.ktcnc.rpc
 
-import kotlinx.rpc.RPC
+import kotlinx.rpc.RemoteService
+import kotlinx.rpc.annotations.Rpc
 
-interface FileSystemService : RPC {
+@Rpc
+interface FileSystemService : RemoteService {
     suspend fun getRoot(): FileResponse
 
     suspend fun getFile(path: String): FileResponse
