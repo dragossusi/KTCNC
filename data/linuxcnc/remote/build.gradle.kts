@@ -25,6 +25,7 @@ kotlin {
                 implementation(Libs.okio)
                 implementation(Libs.Rpc.ktorClient)
                 implementation(Libs.Rpc.client)
+                implementation(Libs.Rpc.serializationJson)
                 implementation(Libs.Ktor.Client.core)
 
                 // logging

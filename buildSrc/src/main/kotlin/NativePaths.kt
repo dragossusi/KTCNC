@@ -2,7 +2,10 @@ import java.io.File
 import org.gradle.api.Project
 
 object NativePaths {
-  fun getNativePaths(project: Project): List<String> {
+  fun createJvmArgs(project: Project) =
+    "-Djava.library.path=${getNativePaths(project).joinToString(":")}"
+
+  private fun getNativePaths(project: Project): List<String> {
 
     val linuxCncHome = project.requirePath("LINUXCNC_HOME", "linuxcnc.home")
 
@@ -10,9 +13,13 @@ object NativePaths {
 
     val vtkLib = project.requirePath("VTK_LIB", "vtk.lib")
 
-    return listOf(File(linuxCncHome, "lib").path, File(linuxCncJdk, "lib").path, vtkLib)
+    return listOf(
+      // linuxcnc home
+      File(linuxCncHome, "lib").path,
+      // jdk
+      File(linuxCncJdk, "lib").path,
+      // vtk
+      vtkLib
+    )
   }
-
-  fun createJvmArgs(project: Project) =
-    "-Djava.library.path=${getNativePaths(project).joinToString(":")}"
 }

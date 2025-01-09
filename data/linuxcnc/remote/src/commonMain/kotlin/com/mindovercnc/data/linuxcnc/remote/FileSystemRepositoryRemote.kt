@@ -4,11 +4,13 @@ import com.mindovercnc.data.linuxcnc.FileSystemRepository
 import io.ktor.client.*
 import kotlinx.rpc.krpc.ktor.client.rpc
 import kotlinx.rpc.krpc.ktor.client.rpcConfig
+import kotlinx.rpc.krpc.serialization.json.json
 import kotlinx.rpc.withService
 import mu.KotlinLogging
 import ro.dragossusi.ktcnc.rpc.FileResponse
 import ro.dragossusi.ktcnc.rpc.FileSystemService
 
+/** Remote implementation for [FileSystemRepository]. */
 class FileSystemRepositoryRemote(
     private val httpClient: HttpClient
 ) : FileSystemRepository {
@@ -30,12 +32,12 @@ class FileSystemRepositoryRemote(
     }
 
     override suspend fun getNcRootAppFile(): FileResponse {
-        return fileSystemService.getRoot()
+        return createService().getRoot()
     }
 
     override suspend fun getFilesInPath(path: String): List<FileResponse> {
         // TODO
-        return fileSystemService.getFilesInPath(path)
+        return createService().getFilesInPath(path)
     }
 
     override suspend fun writeProgramLines(lines: List<String>, programName: String) {
